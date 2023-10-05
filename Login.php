@@ -2,8 +2,10 @@
 <head><title>Processing Form</title></head>
 <body>
 <?php
+session_start ();
+REQUIRE 'header.php';
 REQUIRE 'dbconnect.php';
-dbconnect();
+dbConnect();
 echo 'Username: '.$_POST['username'].'<br>';
 echo 'Password: '.$_POST['password'].'<br>';
 $username= $_POST['username'];
@@ -18,25 +20,27 @@ if (!$usernameCheck){
 	echo 'The user does not exist';
 }
 
-else if (password_verify ($password, $encryptedPass)){
-		
-	session_start ();
+else  {
+	$encryptedPass = $usernameCheck['password'];
+	if (password_verify ($password, $encryptedPass)){
+
 	session_regenerate_id (true);
 		$_SESSION['user_id'] = $usernameCheck['user_id'];
+		$_SESSION['admin'] = $usernameCheck['admin'];
 			echo 'Login Successful';
 			header ("Location: mainProfile.php");
 			exit();
 
 }
 
-else {
+	else {
+		
+		echo 'Such account does not exist';
+		header("Location: index.php");
+		exit();
 	
-	echo 'Such account does not exist';
-	header("Location: mainProfile.php");
-	exit();
 	
-	
-}
+}}
 
 
 

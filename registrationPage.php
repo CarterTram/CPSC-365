@@ -2,6 +2,7 @@
 <head><title>Register</title></head>
 <body>
 <h1> Registration </h1>
+<?php REQUIRE 'header.php'; ?>
 <form action="doform.php" method="POST">  
 	<input type="hidden" name="hiddenvalue" value="foo">
 		Username <input type="text" name="username"><br>

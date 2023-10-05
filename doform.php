@@ -2,6 +2,7 @@
 <head><title>Processing Form</title></head>
 <body>
 <?php
+session_start();
 REQUIRE 'dbconnect.php';
 dbConnect ();
 

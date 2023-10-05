@@ -7,5 +7,8 @@
 <form action="logout.php" method ="POST">
 <input type="submit" value= "Logout">
 </form>
+<form action="index.php" method="POST">
+	<input type="submit" value= "Home">
+</form>
 </body>
 </html>
