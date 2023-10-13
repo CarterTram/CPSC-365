@@ -1,5 +1,5 @@
 <html>
-<head><title>Processing Form</title></head>
+<head><title>Registration Form</title></head>
 <body>
 <?php
 session_start();

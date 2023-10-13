@@ -1,5 +1,5 @@
 <html>
-<head><title>Register</title></head>
+<head><title>Register</title><link href="StyleSheet.css" rel="stylesheet"></head>
 <body>
 <h1> Registration </h1>
 <?php REQUIRE 'header.php'; ?>
@@ -11,7 +11,7 @@
 </form>
 Already have an account?
 <form action="loginPage.php" method="POST">
-	<input type="submit" value= "Login">
+	<input type="submit"class="test" value= "Login">
 </form>
 <form action="index.php" method="POST">
 	<input type="submit" value= "Home">
