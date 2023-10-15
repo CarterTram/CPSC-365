@@ -14,7 +14,6 @@ if (isset($_SESSION['admin']) && $_SESSION['admin']){
 	echo '
 	<form action="AdminPage.php" method="POST">
 		<input type="submit" value= "Admin Home Page">	
- #fff; padding: 15px 20px; border: none; cursor: pointer;">
 	</form>';
 }
 else {
