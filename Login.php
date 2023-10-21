@@ -28,7 +28,7 @@ else  {
 		$_SESSION['user_id'] = $usernameCheck['user_id'];
 		$_SESSION['admin'] = $usernameCheck['admin'];
 			echo 'Login Successful';
-			header ("Location: mainProfile.php");
+			header ("Location: index.php");
 			exit();
 
 }

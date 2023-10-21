@@ -1,0 +1,333 @@
+Carter Tram 
+
+Anhtram1214@gmail.com 
+
+CPSC 365 
+
+ 
+
+Social Movie Rating Site Summary 
+
+Table of Contents: 
+
+Complete Entity Relationship Diagram 
+
+List of Calculated fields 
+
+List of General Business Rules  
+
+SQL Table Creation 
+
+ 
+
+SUMMARY 
+
+This website was created to allow users to discuss and share movies that they love. It is also made so that people can see what movies they might like to see. It allows users to add friends, quickly look through genres of movies, see movies their friends like and so on. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Complete Entity Relationship Diagram 
+
+ 
+
+ 
+
+Users – users are the people who use our website to share their opinions, review a movie and read other’s reviews. Users are important to our website since they’re what our website is building from. Table Type - Data table. 
+
+ 
+
+Comments – comments are left on a movie’s page by users in order to express how they feel about the movies. Comments add a whole new dimension to a movie review. 
+
+Table Type – Linking Table 
+
+Ratings - ratings are left on a movie by users. Ratings are for users to quickly see a score that the movie has when they are just browsing through to find movies to watch.  
+
+Table Type – Linking Table 
+
+Movies – Movies are the main content. Without movies we would have nothing for the users to commentate on or rate. 
+
+Table Type – Data Table 
+
+Genres- Genres is a table holding the Genres that describe the movies. This helps the users to look through movies sorted by genre. 
+
+Table Type – Data Table 
+
+Friends – The Friends on our social movie rating website are the people who we will discuss a lot of movies that certain users have in common. Having friends is important since you will eventually learn what you both like to watch and recommend   
+
+Table Type – Data Table 
+
+Genres-Movies – a linking table for genres and movies to represent the many to many relationship.   
+
+Table Type – Linking Table 
+
+ 
+
+ List of Calculated Fields 
+
+ 
+
+ 
+
+Sum of User Ratings – the sum of all user ratings added up 
+
+Total number of ratings - 
+
+All the number of ratings added up 
+
+Number of friends - 
+
+All the number of friends a user has added up 
+
+Number of Comments - 
+
+All the comments under a movie added up. 
+
+Average Rating – a value that is given by adding up all the ratings given by users then dividing it by the amount of ratings - 
+
+(Total value of all user ratings) / (total number of ratings) 
+
+ 
+
+ 
+
+List of general business rules 
+
+Usernames are unique, must contain numbers and letters. 
+
+Password must contain numbers and letters and is at least 6 characters in length. 
+
+Friend requests can be made and accepted by users. 
+
+Users can modify or remove their own comments. 
+
+Admins can remove comments of anyone, add movie and remove ratings if it is a spam or bias. 
+
+ 
+
+SQL Statements  
+
+CREATE DATABASE movie_site; 
+
+USE movie_site; 
+
+CREATE TABLE users ( 
+
+user_id INT AUTO_INCREMENT, 
+
+userName VARCHAR(255) NOT NULL, 
+
+password VARCHAR(255) NOT NULL, 
+
+admin BOOLEAN, 
+
+favoriteMovie TEXT(200), 	
+
+PRIMARY KEY (user_id) 
+
+)engine=InnoDB;  
+
+  
+
+CREATE TABLE genres (  
+
+genre_id  INT AUTO_INCREMENT,  
+
+genreName VARCHAR(255) NOT NULL, 
+
+PRIMARY KEY(genre_id)  
+
+)engine=InnoDB;  
+
+  
+
+CREATE TABLE movies ( 
+
+movies_id INT AUTO_INCREMENT, 
+
+movieName VARCHAR(255) NOT NULL, 
+
+yearReleased INT NOT NULL, 
+
+director VARCHAR(255) NOT NULL, 
+
+genre_id INT, 
+
+producer VARCHAR(255) , 
+
+overallRating DOUBLE(1,1), 
+
+description TEXT(2047) NOT NULL, 
+dateAdded DATETIME,
+
+upload VARCHAR(255),
+
+PRIMARY KEY(movies_id), 
+
+FOREIGN KEY (genre_id) REFERENCES genres(genre_id) 
+
+)engine=InnoDB; 
+
+ 
+
+  
+
+CREATE TABLE genresMovies (  
+
+  
+
+genresMovies_id INT AUTO_INCREMENT,  
+
+movies_id INT, 
+
+genre_id INT, 
+
+  
+
+PRIMARY KEY (genresMovies_id), 
+
+FOREIGN KEY (movies_id) REFERENCES movies(movies_id), 
+
+FOREIGN KEY (genre_id) REFERENCES genres(genre_id) 
+
+)engine=InnoDB; 
+
+  
+
+CREATE TABLE comments ( 
+
+comments_id INT, 
+
+commentContent TEXT(2047) NOT NULL, 
+
+movies_id INT, 
+
+user_id INT, 
+
+PRIMARY KEY (comments_id), 
+
+FOREIGN KEY (movies_id) REFERENCES movies(movies_id), 
+
+FOREIGN KEY (user_id) REFERENCES users(user_id) 
+
+)engine=InnoDB; 
+
+  
+
+CREATE TABLE ratings ( 
+
+rating_id INT AUTO_INCREMENT, 
+
+ratingValue DOUBLE(1,1) NOT NULL, 
+
+movies_id INT, 
+
+user_id INT, 
+
+PRIMARY KEY (rating_id), 
+
+FOREIGN KEY (movies_id) REFERENCES movies(movies_id), 
+
+FOREIGN KEY (user_id) REFERENCES users(user_id) 
+
+)engine=InnoDB; 
+
+  
+
+  
+
+CREATE TABLE friends (  
+
+friend_id INT AUTO_INCREMENT, 
+
+user_id INT, 
+
+user2_id INT, 
+
+TotalFriends INT NOT NULL,  
+
+DateAdded DATE NOT NULL,  
+
+PRIMARY KEY (friend_id), 
+
+FOREIGN KEY (user_id) REFERENCES users(user_id), 
+
+FOREIGN KEY (user2_id) REFERENCES users(user_id) 
+
+)engine=InnoDB;  
+
+ 
+
+CREATE TABLE actors (  
+
+actor_id  INT AUTO_INCREMENT,  
+
+actorName VARCHAR(255) NOT NULL, 
+
+PRIMARY KEY(actor_id)  
+
+)engine=InnoDB; 
+
+ 
+
+
+CREATE TABLE actor_movies (  
+
+am_id INT AUTO_INCREMENT, 
+movies_id INT, 
+actor_id INT, 
+PRIMARY KEY (am_id), 
+FOREIGN KEY (movies_id) REFERENCES movies(movies_id), 
+FOREIGN KEY (actor_id) REFERENCES actors(actor_id) 
+)engine=InnoDB; 
+
+CREATE TABLE directors (
+directorId INT AUTO_INCREMENT,
+name VARCHAR(255),
+PRIMARY KEY (directorId)
+)engine=InnoDB;
+
+CREATE TABLE Director_Movies(
+dmId INT AUTO_INCREMENT,
+movies_id INT,
+directorId INT,
+PRIMARY KEY(dmId),
+FOREIGN KEY (movies_id) REFERENCES movies(movies_id),
+FOREIGN KEY (directorId) REFERENCES directors(directorId)
+)engine=InnoDB;
+
+ 
+
+INSERT INTO genres (genreName) VALUES ('Action'); 
+INSERT INTO genres (genreName) VALUES ('Adventure'); 
+INSERT INTO genres (genreName) VALUES ('Animation'); 
+INSERT INTO genres (genreName) VALUES ('Comedy'); 
+INSERT INTO genres (genreName) VALUES ('Crime'); 	
+INSERT INTO genres (genreName) VALUES ('History'); 
+INSERT INTO genres (genreName) VALUES ('Horror'); 
+INSERT INTO genres (genreName) VALUES ('Romance'); 
+INSERT INTO genres (genreName) VALUES ('SciFi'); 
+
+
+ 
+
+ 
+
+ 
+
+ 

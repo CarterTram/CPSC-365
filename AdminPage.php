@@ -29,18 +29,21 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 
 ?>
 <div id="bodycontent">
-<form action ="AdminPageDoform.php" method ="POST">
-	Movie<br> <input type="text" name="inputmovieName"><br>
-	Director<br> <input type="text" name="inputdirector"><br>
-	Year<br> <input type="text" name="inputyearReleased"><br>
+<form action ="AdminPageDoform.php" method ="POST" enctype="multipart/form-data">
+	Movie<br> <input type="text" name="inputmovieName" required><br>
+	Director<br> <input type="text" name="inputdirector" required><br>
+	Year<br> <input type="text" name="inputyearReleased" required><br>
 	Producer<br> <input type="text" name="inputproducer"><br>	
-	Actor<br> <input type="text" name="inputactor1"><br>
+	Actor<br> <input type="text" name="inputactor1"required><br>
 	Actor<br> <input type="text" name="inputactor2"><br>
 	Actor<br> <input type="text" name="inputactor3"><br>
 	Description<br>
-	<textarea name = "Description" rows="10" cols = "50"></textarea><br>
+	<textarea name = "Description" rows="10" cols = "50" required></textarea><br>
+	<input type="file" name="upload" accept="image/*">
+
 	<label for="genres">Choose a genre:</label>
-    <select name="genre" id="genres">
+    <select name="genre" id="genres" required>
+	<option value="Select a genre"></option>
 	<option value="Action">Action</option>
 	<option value="Adventure">Adventure</option>
     <option value="Animation">Animation</option>
@@ -55,6 +58,7 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 	
 	<label for="genres">Choose a genre:</label>
     <select name="genre1" id="genres">
+	<option value="Select a genre"></option>
 	<option value="Action">Action</option>
 	<option value="Adventure">Adventure</option>
     <option value="Animation">Animation</option>
@@ -69,6 +73,7 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 	
 	<label for="genres">Choose a genre:</label>
     <select name="genre2" id="genres">
+	<option value="Select a genre"></option>
 	<option value="Action">Action</option>
 	<option value="Adventure">Adventure</option>
     <option value="Animation">Animation</option>
@@ -79,9 +84,9 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 	<option value="Romance">Romance</option>
 	<option value="SciFi">Science Fiction</option>
 	</select>
-	
-	
-  <input type="submit" value="Submit">
+	<input type="submit" value="Add Movie">
+<!-- image upload-->
+
 
 </form>
 </div>

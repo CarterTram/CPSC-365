@@ -40,7 +40,7 @@ $stmt2 -> execute();
 $fetchgenreRow =$stmt2->fetch(PDO::FETCH_ASSOC);
 
 $inputGenreId = $fetchgenreRow['genre_id'];
-
+if (!$inputGenreId ==NULL){
 $sql= 'INSERT INTO genresMovies (movies_id, genre_id)
 VALUES(:movieId, :inputGenreId)';
 $insertGenre = $pdo->prepare($sql);
@@ -49,7 +49,7 @@ $insertGenre->bindParam(':inputGenreId', $inputGenreId);
 $insertGenre ->execute();
 	//adding genres into the database
 
-}
+}}
 else {
 	echo 'Error adding the first genre';
 }
@@ -62,7 +62,7 @@ $stmt3 -> execute();
 $fetchgenreRow1 =$stmt3->fetch(PDO::FETCH_ASSOC);
 
 $inputGenreId1 = $fetchgenreRow1['genre_id'];
-
+if (!$inputGenreId1 ==NULL){
 $sql= 'INSERT INTO genresMovies (movies_id, genre_id)
 VALUES(:movieId, :inputGenreId)';
 $insertGenre1 = $pdo->prepare($sql);
@@ -72,7 +72,7 @@ $insertGenre1 ->execute();
 
 	//adding genres into the database
 
-}
+}}
 else {
 	echo 'Error adding the second genre';
 }
@@ -85,7 +85,7 @@ $stmt3 -> execute();
 $fetchgenreRow2 =$stmt3->fetch(PDO::FETCH_ASSOC);
 
 $inputGenreId2 = $fetchgenreRow2['genre_id'];
-
+if (!$inputGenreId2 ==NULL){
 $sql= 'INSERT INTO genresMovies (movies_id, genre_id)
 VALUES(:movieId, :inputGenreId)';
 $insertGenre2 = $pdo->prepare($sql);
@@ -95,7 +95,7 @@ $insertGenre2 ->execute();
 
 	//adding genres into the database
 
-}
+}}
 else {
 	echo 'Error adding the third genre';
 }
@@ -138,7 +138,51 @@ for ($i = 1; $i<=3; $i++) {
 		}
 
 }}
-		header("Location: AdminPage.php");
+	if (isset($_FILES['upload'])){
+		var_dump($_FILES['upload']);
+	if ($_FILES['upload']['error']!= UPLOAD_ERR_OK) {
+		echo 'upload error';
+		exit();
+	}
+	$finfo = new finfo (FILEINFO_MIME_TYPE);
+	$filetype = $finfo->file($_FILES['upload']['tmp_name']);
+	if ($filetype !="image/jpeg")
+	{
+		echo 'not the right image type';
+		exit();
+	}
+	else {
+		$upload_location ='uploads/';
+		$filename = $upload_location.$movieId.'.jpeg';
+		if (move_uploaded_file($_FILES['upload']['tmp_name'], $filename)) {
+			echo 'Image moved to destination successful';
+		}
+		else {
+			echo 'Error moving image to folder';
+			exit();
+		}
+	}
+	$image = imagecreatefromjpeg ($filename);
+	$width = imagesx ($image);
+	$height = imagesx ($image);
+	$thumbHeight = 175;
+	$thumbWidth = floor ($width * ($thumbHeight/$height));
+	$thumbnail = imagecreatetruecolor ($thumbWidth, $thumbHeight);
+	imagecopyresampled ($thumbnail, $image, 0, 0, 0, 0, $thumbWidth, $thumbHeight, $width,
+	$height);
+	$thumbnailName = $upload_location.$movieId.'_thumbnail.jpeg';
+	imagejpeg ($thumbnail, $thumbnailName );
+
+
+}		
+$dateAdded = "UPDATE movies SET dateAdded= NOW() WHERE movies_id =:movie_id";
+$stmt = $pdo->prepare($dateAdded);
+$stmt -> bindParam(':movie_id',$movieId);
+$stmt->execute();
+echo 'date added';
+	//testing refresh to add a delay so we can see error messages etc.
+		//echo '<meta http-equiv="refresh" content ="5;URL=\'http://localhost/CPSC-365/index.php\'">';
+//header("Location: AdminPage.php");
 
 ?>
 </body>

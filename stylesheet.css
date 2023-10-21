@@ -10,6 +10,14 @@
 		  margin: 4px 2px;
 		  cursor: pointer;
 		}
+		.headbutton {
+	background-color: skyblue;
+	color: white;
+    border: none;
+    padding: 10px 20px;
+	position: ; 
+	cursor:pointer;
+		}
 #bodycontent {  
 	background-color: #8B008B;
 	color: white;
