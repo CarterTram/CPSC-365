@@ -31,7 +31,7 @@ while ($movieCheck = $stmt -> fetch()){
 		echo "<img src='".$filepath."'/><br/>";
 	}
 	
-	$url = "moviePage.php?movies_id ={$movieId}";
+	$url = "moviePage.php?id={$movieId}";
 	$linkurl = "<h1><a href='{$url}'>{$movieCheck['movieName']}</a></h1>";
 	echo $linkurl;
 	echo "<br/><p>{$movieCheck['description']}</p>";

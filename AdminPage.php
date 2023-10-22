@@ -1,5 +1,5 @@
 <html>
-<head><title> Admin Page </title><link href="StyleSheet.css" rel="stylesheet"></head>
+<head><title> Admin Page </title><link href="stylesheet.css" rel="stylesheet"></head>
 <body>
 <?php
 session_start();
