@@ -12,20 +12,23 @@ dbConnect ();
 
 
 <?php
-$movieDisplay = 'SELECT * FROM movies LIMIT 5';
+$movieDisplay ='SELECT *
+FROM movies
+ORDER BY dateAdded DESC
+LIMIT 5';
+//$movieDisplay = 'SELECT * 
+//FROM movies 
+//LIMIT 5';
 $stmt = $pdo->prepare($movieDisplay);
 $stmt -> execute();
 
 //SHOW SOME MOVIES AT THE HOMEPAGE
 while ($movieCheck = $stmt -> fetch()){
-	$movieId = $movieCheck['movies_id'];
-	echo 'MOVIE ID IS'.$movieId;
+	$movieId = $movieCheck['movies_id'];	
 	$filepath = "uploads/{$movieId}_thumbnail.jpeg";
-		$filepath = "uploads/9_thumbnail.jpeg";
 	if(file_exists($filepath)){	
 		//echo "<img src='{$filepath}'/><br/>";
 		echo "<img src='".$filepath."'/><br/>";
-		echo" loop is running";
 	}
 	
 	$url = "moviePage.php?movies_id ={$movieId}";

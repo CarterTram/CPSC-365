@@ -168,8 +168,6 @@ director VARCHAR(255) NOT NULL,
 
 genre_id INT, 
 
-producer VARCHAR(255) , 
-
 overallRating DOUBLE(1,1), 
 
 description TEXT(2047) NOT NULL, 

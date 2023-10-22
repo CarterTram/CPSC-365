@@ -33,7 +33,6 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 	Movie<br> <input type="text" name="inputmovieName" required><br>
 	Director<br> <input type="text" name="inputdirector" required><br>
 	Year<br> <input type="text" name="inputyearReleased" required><br>
-	Producer<br> <input type="text" name="inputproducer"><br>	
 	Actor<br> <input type="text" name="inputactor1"required><br>
 	Actor<br> <input type="text" name="inputactor2"><br>
 	Actor<br> <input type="text" name="inputactor3"><br>

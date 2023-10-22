@@ -19,13 +19,12 @@ if ($movieCheck){
 	exit();
 }
 else {
-	$inputMovie = 'INSERT INTO movies (movieName, yearReleased,director,producer, description) 
-	VALUES(:inputmovieName,:inputyearReleased,:inputdirector,:inputproducer,:Description)';
+	$inputMovie = 'INSERT INTO movies (movieName, yearReleased,director, description) 
+	VALUES(:inputmovieName,:inputyearReleased,:inputdirector,:Description)';
 	$stmt = $pdo->prepare($inputMovie);
 	$stmt->bindParam(':inputmovieName',$_POST['inputmovieName']);
 	$stmt->bindParam(':inputyearReleased',$_POST['inputyearReleased']);
 	$stmt->bindParam(':inputdirector',$_POST['inputdirector']);
-	$stmt->bindParam(':inputproducer',$_POST['inputproducer']);
 	$stmt->bindParam(':Description',$_POST['Description']);
 	$stmt->execute();
 	$movieId = $pdo->lastInsertId();
@@ -60,8 +59,9 @@ $stmt3 = $pdo->prepare("SELECT * FROM genres WHERE genreName=:genres");
 $stmt3 ->bindParam(':genres', $_POST['genre1']);
 $stmt3 -> execute();
 $fetchgenreRow1 =$stmt3->fetch(PDO::FETCH_ASSOC);
-
+if ($fetchgenreRow1!=NULL){
 $inputGenreId1 = $fetchgenreRow1['genre_id'];
+}
 if (!$inputGenreId1 ==NULL){
 $sql= 'INSERT INTO genresMovies (movies_id, genre_id)
 VALUES(:movieId, :inputGenreId)';
@@ -83,8 +83,9 @@ $stmt3 = $pdo->prepare("SELECT * FROM genres WHERE genreName=:genres");
 $stmt3 ->bindParam(':genres', $_POST['genre2']);
 $stmt3 -> execute();
 $fetchgenreRow2 =$stmt3->fetch(PDO::FETCH_ASSOC);
-
+if ($fetchgenreRow2 !=NULL){
 $inputGenreId2 = $fetchgenreRow2['genre_id'];
+}
 if (!$inputGenreId2 ==NULL){
 $sql= 'INSERT INTO genresMovies (movies_id, genre_id)
 VALUES(:movieId, :inputGenreId)';
