@@ -1,14 +1,13 @@
 <head><title>User Authentication</title><link href="stylesheet.css" rel="stylesheet"></head>
 <header>
-    <button onclick="window.location.href='index.php'" style="background-color: skyblue;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-	position: ; 
-	cursor:pointer;">Home</button>
-</header>
 
+</header>
+<div class="header-background">
 <?php
+echo'
+<form action="index.php" method="POST">
+<input type="submit" class = "headbutton" value= "Home">	
+</form>';
 
 if (isset($_SESSION['admin']) && $_SESSION['admin']){
 	echo '
@@ -41,3 +40,4 @@ echo'
 //	<input type="submit" value= "Login">
 //</form>
 ?>
+</div>

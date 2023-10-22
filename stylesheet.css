@@ -10,16 +10,19 @@
 			margin: 4px 2px;
 			cursor: pointer;
 		}
+		.header-background{
+			background-color:rgb(241, 128, 63)
+		}
 		
 		.centerDiv {
-			background-color: #af4ca2;
+			background-color: #eda8e3;
 			border: none;
 			color: white;
 			padding: 15px 32px;
 			text-align: center;
 			text-decoration: none;
 			display: inline-block;
-			font-size: 16px;
+			font-size: 26px;
 			margin: 4px 2px;
 			cursor: pointer;
 		}
@@ -30,6 +33,7 @@
 			padding: 10px 20px;
 			position: relative;
 			cursor:pointer;
+			float:left;
 		}
 #bodycontent {  
 	background-color: #8B008B;
@@ -47,6 +51,25 @@
         color: red;
         font-weight: bold;
     }
+	.rating-form {
+		font-size: 20px;
+
+	}        
+	.rating-label {
+		display: block;
+		margin-bottom: 10px;
+		color:rgb(255, 225, 0);
+	}
+	.description{
+		font-size: 30px;
+		text-align: left;
+		color:black;
+	}
+	.movieName{
+		font-size: 48px;
+		text-align:center;
+		color:dimgray;
+	}
 
 	
 
