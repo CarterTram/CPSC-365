@@ -3,6 +3,12 @@
 <body>
 <h1> Registration </h1>
 <?php REQUIRE 'header.php'; ?>
+<?php
+if (isset($_GET["error"])) {
+    $error = $_GET["error"];
+    echo "<p class='error'>$error</p>";
+}
+?>
 <form action="doform.php" method="POST">  
 	<input type="hidden" name="hiddenvalue" value="foo">
 		Username <input type="text" name="username"><br>
