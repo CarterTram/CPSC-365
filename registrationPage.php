@@ -1,7 +1,7 @@
 <html>
 <head><title>Register</title><link href="StyleSheet.css" rel="stylesheet"></head>
 <body>
-<h1> Registration </h1>
+<h1> Registration </h1><br/>
 <?php REQUIRE 'header.php'; ?>
 <?php
 if (isset($_GET["error"])) {
@@ -11,8 +11,8 @@ if (isset($_GET["error"])) {
 ?>
 <form action="doform.php" method="POST">  
 	<input type="hidden" name="hiddenvalue" value="foo">
-		Username <input type="text" name="username"><br>
-		Password <input type="password" name= "password"><br>
+	<br/><br/>Username <input type="text" name="username"><br>
+		 Password <input type="password" name= "password"><br>
 	<input type="submit" value="Register">
 </form>
 Already have an account?

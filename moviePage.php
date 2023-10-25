@@ -8,7 +8,7 @@ dbConnect ();
 ?>
 
 
-<body>
+
     <div class="centerDiv">
     <p>
         <?php

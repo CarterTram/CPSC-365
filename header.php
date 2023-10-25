@@ -2,6 +2,7 @@
 <header>
 
 </header>
+<body>
 <div class="header-background">
 <?php
 echo'

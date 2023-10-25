@@ -1,6 +1,6 @@
 <html>
 <head><title> Admin Page </title><link href="stylesheet.css" rel="stylesheet"></head>
-<body>
+
 <?php
 session_start();
 REQUIRE 'header.php';

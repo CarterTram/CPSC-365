@@ -7,8 +7,8 @@ dbConnect ();
 <html>
 <head><title>User Authentication</title><link href="StyleSheet.css" rel="stylesheet"></head>
 
-<body>
-<h1> Movie Discovery </h1>
+
+<br/><h1 class="title"> Movie Discovery </h1>
 
 
 <?php
@@ -34,8 +34,8 @@ while ($movieCheck = $stmt -> fetch()){
 	$url = "moviePage.php?id={$movieId}";
 	$linkurl = "<h1><a href='{$url}'>{$movieCheck['movieName']}</a></h1>";
 	echo $linkurl;
-	echo "<br/><p>{$movieCheck['description']}</p>";
-	echo "<br/><p>Directed By: {$movieCheck['director']}</p>";
+	echo "<br/><p class =\"description\">{$movieCheck['description']}</p>";
+	echo "<br/><p class =\"description\">Directed By: {$movieCheck['director']}</p>";
 	
 }
 ?>
