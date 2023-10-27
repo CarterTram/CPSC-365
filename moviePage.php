@@ -97,7 +97,9 @@ dbConnect ();
 
 
                     
-                            echo "<br/><p class =\"comments\">{$commentOwner} : $commentContent";
+                            echo "<br/><p class =\"comments\">{$commentOwner}: ";
+                            echo htmlentities($commentContent,ENT_QUOTES);
+
                             if (isset($_SESSION['user_id'])){
 
                                 if ($commentUserID != $_SESSION['user_id']){
