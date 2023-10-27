@@ -15,7 +15,7 @@ $stmt->bindParam(':rating',$ratingNum);
 $stmt->bindParam(':mID',$movieID);
 $stmt->bindParam(':userID',$userID);
 $stmt->execute();
-header("Location:moviePage.php");
+header("Location:index.php");
 ?>
     
 
