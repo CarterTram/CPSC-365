@@ -4,12 +4,7 @@ REQUIRE 'header.php';
 REQUIRE 'dbconnect.php';
 dbConnect ();
 ?>
-<html>
-<head><title>User Authentication</title><link href="StyleSheet.css" rel="stylesheet"></head>
-
-
-<br/><h1 class="title"> Movie Discovery </h1>
-
+<head><title>Movie Discovery</title><link href="StyleSheet.css" rel="stylesheet"></head>
 
 <?php
 $movieDisplay ='SELECT *
@@ -28,7 +23,7 @@ while ($movieCheck = $stmt -> fetch()){
 	$filepath = "uploads/{$movieId}_thumbnail.jpeg";
 	if(file_exists($filepath)){	
 		//echo "<img src='{$filepath}'/><br/>";
-		echo "<img src='".$filepath."'/><br/>";
+		echo "<br/><img src='".$filepath."'/><br/>";
 	}
 	
 	$url = "moviePage.php?id={$movieId}";
@@ -39,5 +34,6 @@ while ($movieCheck = $stmt -> fetch()){
 	
 }
 ?>
+
 </body>
 </html>

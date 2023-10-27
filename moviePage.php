@@ -41,13 +41,18 @@ dbConnect ();
                 <input type="radio" name="rating" value="4" id="rating-4" class="rating-input">
                 <label for="rating-1" class="rating-star">5★</label>
                 <input type="radio" name="rating" value="5" id="rating-5" class="rating-input">
-                <input type="submit" value="Submit Rating">';
+                <input type="submit" value="Submit Rating">
+                <input type="hidden" id="movieIDTransfer" name="movieID" value="'.$movieId.'">
+            </form>';
+
+            
     }
+    
+    
     ?>
-    <h2 class="movieName"><?php echo $movie['movieName']; ?></h2>
+    <p class="movieName"><?php echo $movie['movieName']; ?></p>
     <p class ="description"><?php echo $movie['description']; ?></p>
-    <p><
-    </p>
+    <p>Comments:<br/><textarea name = "comment" rows="1" cols = "50"></textarea></p><br/>
     </div>
 
 

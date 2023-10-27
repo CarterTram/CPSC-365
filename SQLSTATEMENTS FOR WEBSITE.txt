@@ -231,7 +231,7 @@ CREATE TABLE ratings (
 
 rating_id INT AUTO_INCREMENT, 
 
-ratingValue DOUBLE(1,1) NOT NULL, 
+ratingValue INT NOT NULL, 
 
 movies_id INT, 
 
@@ -307,6 +307,26 @@ directorId INT,
 PRIMARY KEY(dmId),
 FOREIGN KEY (movies_id) REFERENCES movies(movies_id),
 FOREIGN KEY (directorId) REFERENCES directors(directorId)
+)engine=InnoDB;
+
+CREATE TABLE Friend_Requests(
+FR_ID INT AUTO_INCREMENT,
+
+user_id INT, 
+
+user2_id INT, 
+
+Accept_Status BOOLEAN,
+Reject_Status BOOLEAN,
+
+DateAdded DATE NOT NULL,  
+
+PRIMARY KEY (FR_ID), 
+
+FOREIGN KEY (user_id) REFERENCES users(user_id), 
+
+FOREIGN KEY (user2_id) REFERENCES users(user_id) 
+    
 )engine=InnoDB;
 
  
