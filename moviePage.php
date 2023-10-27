@@ -51,8 +51,43 @@ dbConnect ();
     
     ?>
     <p class="movieName"><?php echo $movie['movieName']; ?></p>
-    <p class ="description"><?php echo $movie['description']; ?></p>
-    <p>Comments:<br/><textarea name = "comment" rows="1" cols = "50"></textarea></p><br/>
+    <p class ="description"><?php echo $movie['description']; ?></p><br/>
+    <p>Directed By: <?php echo $movie['director'];?><br/>
+       Year: <?php echo$movie['yearReleased'];?></p>
+    <?php 
+        if (isset($_SESSION['user_id'])) {
+
+     ?>   
+    <p> Leave a comment:
+        <form action="comment.php" method ="POST">
+        <br/><textarea name = "comment" rows="1" cols = "50"></textarea><br/>
+        <input type="hidden" id="movieIDTransfer" name="movieID" value="<?php echo$movieId; ?>">
+        <input type="submit" value="Comment" >
+        </form>
+        </p>
+    <?php
+        }
+        //Display comments
+        $commentDisplay ='SELECT * FROM comments';
+        $stmt =$pdo->prepare($commentDisplay);
+        $stmt->execute();
+        while ($commentFetch = $stmt->fetch()){
+            $commentUserID =$commentFetch['user_id'];
+            $commentContent =$commentFetch['commentContent'];
+            $sql ='SELECT * FROM users WHERE user_id = :user_id';
+            $stmt2 = $pdo->prepare($sql);
+            $stmt2->bindParam(':user_id',$commentUserID);
+            $stmt2->execute();
+            $userNameFetch =$stmt2->fetch();
+            $commentOwner = $userNameFetch['userName'];
+            
+            echo "<p class =\"comments\">{$commentOwner} : $commentContent<br/></p>";
+
+            
+               }
+        
+        ?>
+
     </div>
 
 

@@ -1,5 +1,5 @@
 <html>
-<head><title>Movie Page</title><link href=".\stylesheet.css" rel="stylesheet"></head>
+<head><title>Ratings</title><link href=".\stylesheet.css" rel="stylesheet"></head>
 <?php
 session_start();
 REQUIRE 'dbconnect.php';
@@ -15,7 +15,9 @@ $stmt->bindParam(':rating',$ratingNum);
 $stmt->bindParam(':mID',$movieID);
 $stmt->bindParam(':userID',$userID);
 $stmt->execute();
+header("Location:moviePage.php");
 ?>
+    
 
 
 
