@@ -1,11 +1,13 @@
 <html>
 <head><title>Register</title><link href="StyleSheet.css" rel="stylesheet"></head>
-<body>
-<h1> Registration </h1><br/>
 <?php REQUIRE 'header.php'; ?>
 <?php
 if (isset($_GET["error"])) {
     $error = $_GET["error"];
+    echo "<p class='error'>$error</p>";
+}
+if (isset($_GET["error1"])) {
+    $error = $_GET["error1"];
     echo "<p class='error'>$error</p>";
 }
 ?>

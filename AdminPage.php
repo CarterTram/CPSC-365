@@ -48,6 +48,7 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
     <option value="Animation">Animation</option>
 	<option value="Comedy">Comedy</option>
 	<option value="Crime">Crime</option>
+	<option value="Fantasy">Fantasy</option>
 	<option value="History">History</option>
     <option value="Horror">Horror</option>
 	<option value="Romance">Romance</option>

@@ -18,14 +18,14 @@ dbConnect ();
             $stmt->bindParam(':movieId',$movieId);
             $stmt->execute();
             $movie = $stmt ->fetch(PDO::FETCH_ASSOC);
-            //display image
+         //display image
             $filepath = "uploads/{$movieId}.jpeg";
             if(file_exists($filepath)){	
-                //echo "<img src='{$filepath}'/><br/>";
+         //echo "<img src='{$filepath}'/><br/>";
                 echo "<img src='".$filepath."'/><br/>";
             }
             if (isset($movieId)){
-                //fetch actors
+        //fetch actors
                 $stmt= $pdo->prepare("SELECT actors.actorName FROM actor_movies JOIN actors ON actor_movies.actor_id = actors.actor_id WHERE actor_movies.movies_id = :movieId");
                 $stmt->bindParam(':movieId',$movieId);
                 $stmt->execute();
@@ -35,7 +35,7 @@ dbConnect ();
                     
                 }
             
-                //fetch genres
+         //fetch genres
                 $stmt= $pdo->prepare("SELECT genres.genreName FROM genresMovies JOIN genres ON genresMovies.genre_id = genres.genre_id WHERE genresMovies.movies_id = :movieId");
                 $stmt->bindParam(':movieId',$movieId);
                 $stmt->execute();
@@ -49,15 +49,21 @@ dbConnect ();
             }
               
             if (isset($_SESSION['user_id'])) {
-                //fetch rating
+         //fetch rating
                 $ratingUserID = $_SESSION['user_id'];
-                $sql ='SELECT * FROM ratings WHERE user_id =:user_id';
+                $sql ='SELECT * FROM ratings WHERE (user_id =:user_id) AND (movies_id =:movieId)';
                 $stmt3 = $pdo->prepare($sql);
                 $stmt3->bindParam(':user_id',$ratingUserID);
+                $stmt3->bindParam(':movieId',$movieId);
                 $stmt3->execute();
                 $ratingFetch =$stmt3->fetch();
                 if ($ratingFetch!=NULL){
-                $ratingOwnerID = $ratingFetch['user_id']; 
+                $ratingOwnerID = $ratingFetch['user_id'];
+
+                }
+                else{
+                    $ratingOwnerID = -1;
+                }
                 
                 if ($_SESSION['user_id'] != $ratingOwnerID){
                     echo ' 
@@ -98,14 +104,15 @@ dbConnect ();
         </p>             
     <?php
 
-        }
-            $commentDisplay ='SELECT * FROM comments ORDER BY dateAdded DESC';
+        //fetch comments
+            $commentDisplay ='SELECT * FROM comments WHERE movies_id =:movieId ORDER BY dateAdded DESC';
             $stmt =$pdo->prepare($commentDisplay);
+            $stmt->bindParam(':movieId',$movieId);
             $stmt->execute();
             while ($commentFetch = $stmt->fetch()){
                 $commentUserID =$commentFetch['user_id'];
                 $commentContent =$commentFetch['commentContent'];
-                //fetch user
+         //fetch user
                 $sql ='SELECT * FROM users WHERE user_id = :user_id';
                 $stmt2 = $pdo->prepare($sql);
                 $stmt2->bindParam(':user_id',$commentUserID);
@@ -120,7 +127,7 @@ dbConnect ();
 
                 <?php
 
-                        //Display comments
+         //Display comments
 
 
                     

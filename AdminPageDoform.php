@@ -182,8 +182,8 @@ $stmt -> bindParam(':movie_id',$movieId);
 $stmt->execute();
 echo 'date added';
 	//testing refresh to add a delay so we can see error messages etc.
-		//echo '<meta http-equiv="refresh" content ="5;URL=\'http://localhost/CPSC-365/index.php\'">';
-//header("Location: AdminPage.php");
+		echo '<meta http-equiv="refresh" content ="5;URL=\'http://localhost/CPSC-365/index.php\'">';
+
 
 ?>
 </body>

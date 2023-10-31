@@ -13,6 +13,18 @@ $stmt1->bindParam (':username', $username);
 $stmt1->execute ();	
 $row = $stmt1->fetch();
 $pattern = '/^[a-zA-Z0-9]+$/';
+if (strlen($username)<6){
+	
+	$error = "Username must be at least 6 characters long";
+	header("Location: registrationPage.php?error=" . urlencode($error));
+	exit();
+}
+else if (!preg_match($pattern,$username)){
+	$error = "Username must contain only letters and numbers.";
+	header("Location: registrationPage.php?error=" . urlencode($error));
+	exit();
+}
+
 if (strlen($password)<6){
 	
 	$error = "Password must be at least 6 characters long";
