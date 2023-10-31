@@ -40,10 +40,12 @@ dbConnect ();
                 $stmt->bindParam(':movieId',$movieId);
                 $stmt->execute();
                 $genresList = $stmt->fetchAll();
+                echo "<p class=\"genreFont\">";
                 foreach ($genresList as $genre){
-                    echo $genre['genreName']."<br/>";
+                    echo $genre['genreName']." ";
                     
                 }
+                echo "</p>";
 
     
             }
