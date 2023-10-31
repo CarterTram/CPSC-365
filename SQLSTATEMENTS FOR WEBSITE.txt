@@ -338,11 +338,13 @@ INSERT INTO genres (genreName) VALUES ('Adventure');
 INSERT INTO genres (genreName) VALUES ('Animation'); 
 INSERT INTO genres (genreName) VALUES ('Comedy'); 
 INSERT INTO genres (genreName) VALUES ('Crime');
+INSERT INTO genres (genreName) VALUES ('Drama'); 
 INSERT INTO genres (genreName) VALUES ('Fantasy');	
 INSERT INTO genres (genreName) VALUES ('History'); 
 INSERT INTO genres (genreName) VALUES ('Horror'); 
 INSERT INTO genres (genreName) VALUES ('Romance'); 
 INSERT INTO genres (genreName) VALUES ('SciFi'); 
+INSERT INTO genres (genreName) VALUES ('Thriller'); 
 
 
  

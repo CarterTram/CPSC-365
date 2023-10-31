@@ -1,4 +1,4 @@
-<head><title>User Authentication</title><link href="stylesheet.css" rel="stylesheet"></head>
+<head><link href="stylesheet.css" rel="stylesheet"></head>
 <header>
 
 </header>

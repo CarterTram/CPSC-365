@@ -19,7 +19,7 @@ dbConnect ();
             $stmt->execute();
             $movie = $stmt ->fetch(PDO::FETCH_ASSOC);
          //display image
-            $filepath = "uploads/{$movieId}.jpeg";
+            $filepath = "uploads/{$movieId}_thumbnail.jpeg";
             if(file_exists($filepath)){	
          //echo "<img src='{$filepath}'/><br/>";
                 echo "<img src='".$filepath."'/><br/>";

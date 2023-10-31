@@ -28,6 +28,7 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 //$menuGenerator = new genreMenu();
 
 ?>
+<br/>
 <div id="bodycontent">
 <form action ="AdminPageDoform.php" method ="POST" enctype="multipart/form-data">
 	Movie<br> <input type="text" name="inputmovieName" required><br>
@@ -48,11 +49,13 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
     <option value="Animation">Animation</option>
 	<option value="Comedy">Comedy</option>
 	<option value="Crime">Crime</option>
+	<option value="Drama">Drama</option>
 	<option value="Fantasy">Fantasy</option>
 	<option value="History">History</option>
     <option value="Horror">Horror</option>
 	<option value="Romance">Romance</option>
 	<option value="SciFi">Science Fiction</option>
+	<option value="Thriller">Thriller</option>
 	</select>
 	
 	
@@ -64,10 +67,13 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
     <option value="Animation">Animation</option>
 	<option value="Comedy">Comedy</option>
 	<option value="Crime">Crime</option>
+	<option value="Drama">Drama</option>
+	<option value="Fantasy">Fantasy</option>
 	<option value="History">History</option>
     <option value="Horror">Horror</option>
 	<option value="Romance">Romance</option>
 	<option value="SciFi">Science Fiction</option>
+	<option value="Thriller">Thriller</option>
 	</select>
 	
 	
@@ -79,10 +85,13 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
     <option value="Animation">Animation</option>
 	<option value="Comedy">Comedy</option>
 	<option value="Crime">Crime</option>
+	<option value="Drama">Drama</option>
+	<option value="Fantasy">Fantasy</option>
 	<option value="History">History</option>
     <option value="Horror">Horror</option>
 	<option value="Romance">Romance</option>
 	<option value="SciFi">Science Fiction</option>
+	<option value="Thriller">Thriller</option>
 	</select>
 	<input type="submit" value="Add Movie">
 <!-- image upload-->

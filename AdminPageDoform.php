@@ -1,5 +1,5 @@
 <html>
-<head><title>Registration Form</title></head>
+<head><title></title></head>
 <body>
 <?php
 session_start();
@@ -50,7 +50,7 @@ $insertGenre ->execute();
 
 }}
 else {
-	echo 'Error adding the first genre';
+	echo 'Empty Genre 1 field';
 }
 if (isset($_POST['genre1'])){
 	
@@ -61,20 +61,16 @@ $stmt3 -> execute();
 $fetchgenreRow1 =$stmt3->fetch(PDO::FETCH_ASSOC);
 if ($fetchgenreRow1!=NULL){
 $inputGenreId1 = $fetchgenreRow1['genre_id'];
-}
-if (!$inputGenreId1 ==NULL){
 $sql= 'INSERT INTO genresMovies (movies_id, genre_id)
 VALUES(:movieId, :inputGenreId)';
 $insertGenre1 = $pdo->prepare($sql);
 $insertGenre1->bindParam(':movieId',$movieId);
 $insertGenre1->bindParam(':inputGenreId', $inputGenreId1);
 $insertGenre1 ->execute();
-
-	//adding genres into the database
-
-}}
+}
+}
 else {
-	echo 'Error adding the second genre';
+	echo 'Error Genre 2 field';
 }
 if (isset($_POST['genre2'])){
 	
@@ -85,20 +81,15 @@ $stmt3 -> execute();
 $fetchgenreRow2 =$stmt3->fetch(PDO::FETCH_ASSOC);
 if ($fetchgenreRow2 !=NULL){
 $inputGenreId2 = $fetchgenreRow2['genre_id'];
-}
-if (!$inputGenreId2 ==NULL){
 $sql= 'INSERT INTO genresMovies (movies_id, genre_id)
 VALUES(:movieId, :inputGenreId)';
 $insertGenre2 = $pdo->prepare($sql);
 $insertGenre2->bindParam(':movieId',$movieId);
 $insertGenre2->bindParam(':inputGenreId', $inputGenreId2);
 $insertGenre2 ->execute();
-
-	//adding genres into the database
-
 }}
 else {
-	echo 'Error adding the third genre';
+	echo 'Empty Genre 3 field';
 }
 //**
 //to-do list, allow for nothing to be selected under genre.
