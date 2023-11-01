@@ -15,7 +15,7 @@ $movieCheck = $stmt->fetch();
 $movieId = 0;
 if ($movieCheck){
 	echo 'Movie already exists';
-	//header ("Location: AdminPage.php");
+	echo '<meta http-equiv="refresh" content ="5;URL=\'http://localhost/CPSC-365/index.php\'">';
 	exit();
 }
 else {
@@ -29,7 +29,20 @@ else {
 	$stmt->execute();
 	$movieId = $pdo->lastInsertId();
 	echo 'Movie added successfully';
-}
+
+	//add director 
+	$inputDirector = 'INSERT INTO directors (name) VALUES (:name)';
+	$stmt = $pdo->prepare($inputDirector);
+	$stmt->bindParam(':name',$_POST['inputdirector']);
+	$stmt->execute();
+	$directorID = $pdo->lastInsertID();
+
+	$sql ='INSERT INTO Director_Movies(movies_id, directorId) VALUES (:mID,:dID)';
+	$stmt=$pdo->prepare($sql);
+	$stmt->bindParam(':mID',$movieId);
+	$stmt->bindParam(':dID',$directorID);
+	$stmt->execute();
+
 if (isset($_POST['genre'])){
 	
 // adding the first genre to the database
@@ -175,7 +188,7 @@ echo 'date added';
 	//testing refresh to add a delay so we can see error messages etc.
 		echo '<meta http-equiv="refresh" content ="5;URL=\'http://localhost/CPSC-365/index.php\'">';
 
-
+}
 ?>
 </body>
 </html>

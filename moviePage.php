@@ -95,17 +95,22 @@ dbConnect ();
                 <p class ="description"><?php echo $movie['description']; ?></p><br/>
                 <p>Directed By: <?php echo $movie['director'];?><br/>
                 Year: <?php echo$movie['yearReleased'];?></p>
-			                    <p> Leave a comment:
-                            <form action="comment.php" method ="POST">
-                            <br/><textarea name = "comment" rows="1" cols = "50"></textarea><br/>
-                            <input type="hidden" id="movieIDTransfer" name="movieID" value="<?php echo$movieId; ?>">
-                            <input type="submit" value="Comment" >
-                            </form>
-                            </p>
+			            
         
         </p>             
     <?php
-
+if (isset($_SESSION['user_id'])){
+    ?>
+<p> Leave a comment:
+<form action="comment.php" method ="POST">
+<br/><textarea name = "comment" rows="1" cols = "50"></textarea><br/>
+<input type="hidden" id="movieIDTransfer" name="movieID" value="<?php echo$movieId; ?>">
+<input type="submit" value="Comment" >
+</form>
+</p>
+<?php
+}
+          
         //fetch comments
             $commentDisplay ='SELECT * FROM comments WHERE movies_id =:movieId ORDER BY dateAdded DESC';
             $stmt =$pdo->prepare($commentDisplay);

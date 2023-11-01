@@ -10,7 +10,7 @@ dbConnect ();
 $movieDisplay ='SELECT *
 FROM movies
 ORDER BY dateAdded DESC
-LIMIT 5';
+LIMIT 6';
 //$movieDisplay = 'SELECT * 
 //FROM movies 
 //LIMIT 5';
