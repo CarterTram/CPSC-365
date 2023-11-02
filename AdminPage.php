@@ -34,9 +34,21 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 	Movie<br> <input type="text" name="inputmovieName" required><br>
 	Director<br> <input type="text" name="inputdirector" required><br>
 	Year<br> <input type="text" name="inputyearReleased" required><br>
-	Actor<br> <input type="text" name="inputactor1"required><br>
-	Actor<br> <input type="text" name="inputactor2"><br>
-	Actor<br> <input type="text" name="inputactor3"><br>
+	
+	<!--try to javascript actor-->
+	<span id="actorList">Actor<br><input type="text" id="actorsAdd" name ="actor[]"><br/>
+
+</span>
+	
+	<input type="button" id="addActorButton" value="More Actors"><br/>
+
+
+<!--old code
+	Actor<br> <input type="text" id="actor1" name="inputactor1"><br>
+	Actor<br> <input type="text" id="actor2" name="inputactor2"><br>
+	Actor<br> <input type="text" id="actor3" name="inputactor3"><br>
+
+	-->
 	Description<br>
 	<textarea name = "Description" rows="10" cols = "50" required></textarea><br>
 	<input type="file" name="upload" accept="image/*">
@@ -94,6 +106,8 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 	<option value="Thriller">Thriller</option>
 	</select>
 	<input type="submit" value="Add Movie">
+
+	
 <!-- image upload-->
 
 
@@ -108,9 +122,8 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 
 
 
+<!--javascript-->
 
-
-
-
-
+<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="adminJS.js"></script>
 </body>

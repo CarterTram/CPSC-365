@@ -29,19 +29,34 @@ else {
 	$stmt->execute();
 	$movieId = $pdo->lastInsertId();
 	echo 'Movie added successfully';
+	//add director
+	if (isset($_POST['inputdirector'])){			
+		$stmt = $pdo->prepare("SELECT * FROM directors WHERE name=:directorName");
+		$stmt ->bindParam(':directorName',$_POST['inputdirector']);
+		$stmt ->execute();
+		$directorCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($directorCheck){
+			$sql ='INSERT INTO Director_Movies(movies_id, directorId) VALUES (:mID,:dID)';
+			$stmt=$pdo->prepare($sql);
+			$stmt->bindParam(':mID',$movieId);
+			$stmt->bindParam(':dID',$directorID);
+			$stmt->execute();
+		}
+		else{
+			$inputDirector = 'INSERT INTO directors (name) VALUES (:name)';
+			$stmt = $pdo->prepare($inputDirector);
+			$stmt->bindParam(':name',$_POST['inputdirector']);
+			$stmt->execute();
+			$directorID = $pdo->lastInsertID();
 
-	//add director 
-	$inputDirector = 'INSERT INTO directors (name) VALUES (:name)';
-	$stmt = $pdo->prepare($inputDirector);
-	$stmt->bindParam(':name',$_POST['inputdirector']);
-	$stmt->execute();
-	$directorID = $pdo->lastInsertID();
+			$sql ='INSERT INTO Director_Movies(movies_id, directorId) VALUES (:mID,:dID)';
+			$stmt=$pdo->prepare($sql);
+			$stmt->bindParam(':mID',$movieId);
+			$stmt->bindParam(':dID',$directorID);
+			$stmt->execute();
 
-	$sql ='INSERT INTO Director_Movies(movies_id, directorId) VALUES (:mID,:dID)';
-	$stmt=$pdo->prepare($sql);
-	$stmt->bindParam(':mID',$movieId);
-	$stmt->bindParam(':dID',$directorID);
-	$stmt->execute();
+		}
+	}
 
 if (isset($_POST['genre'])){
 	
@@ -110,39 +125,79 @@ else {
 //**
 
 //if there is an actor already existing in the database,then it's similar to genre, if not we need to add the actor, then do the relationship
-for ($i = 1; $i<=3; $i++) {
-	if (isset($_POST['inputactor'.$i])){
-	$stmt = $pdo->prepare("SELECT * FROM actors WHERE actorName=:actorName");
-	$stmt ->bindParam(':actorName',$_POST['inputactor'.$i]);
-	$stmt ->execute();
-	$actorCheck = $stmt->fetch(PDO::FETCH_ASSOC);
-		//if the actor does already exist
-		if ($actorCheck){
-			$addActor = $pdo->prepare('INSERT INTO actor_movies(movies_id, actor_id)
-			VALUES (:movieId, :actor_id)');
-			$addActor ->bindParam(':movieId', $movieId);
-			$addActor ->bindParam(':actor_id', $actor1Check['actor_id']);
-			$addActor -> execute();
-			
-		}
-		//if the actor does not already exist
-		else {
-			$newActor = $pdo->prepare('INSERT INTO actors(actorName)
-			VALUES (:actorName)');
-			$newActor->bindParam (':actorName',$_POST['inputactor'.$i]);
-			$newActor->execute();
-			$newActorId = $pdo->lastInsertId();
-			//after adding the new actor into the database, now we add the actor into actor_movies
-			
-			$addActor = $pdo->prepare('INSERT INTO actor_movies(movies_id, actor_id)
-			VALUES (:movieId, :actor_id)');
-			$addActor ->bindParam(':movieId', $movieId);
-			$addActor ->bindParam(':actor_id', $newActorId);
-			$addActor -> execute();	
-		
-		}
+	//try javascript inputing actors
+	if (isset($_POST['actor'])){
+		foreach ($_POST['actor'] as $actor_name){
+			$stmt = $pdo->prepare("SELECT * FROM actors WHERE actorName=:actorName");
+			$stmt ->bindParam(':actorName',$actor_name);
+			$stmt ->execute();
+			$actorCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+				//if the actor does already exist
+				if ($actorCheck){
+					$addActor = $pdo->prepare('INSERT INTO actor_movies(movies_id, actor_id)
+					VALUES (:movieId, :actor_id)');
+					$addActor ->bindParam(':movieId', $movieId);
+					$addActor ->bindParam(':actor_id', $actor1Check['actor_id']);
+					$addActor -> execute();
 
-}}
+
+		}
+				//if the actor does not already exist
+				else {
+					$newActor = $pdo->prepare('INSERT INTO actors(actorName)
+					VALUES (:actorName)');
+					$newActor->bindParam (':actorName',$actor_name);
+					$newActor->execute();
+					$newActorId = $pdo->lastInsertId();
+					//after adding the new actor into the database, now we add the actor into actor_movies
+					
+					$addActor = $pdo->prepare('INSERT INTO actor_movies(movies_id, actor_id)
+					VALUES (:movieId, :actor_id)');
+					$addActor ->bindParam(':movieId', $movieId);
+					$addActor ->bindParam(':actor_id', $newActorId);
+					$addActor -> execute();	
+				
+				}
+
+	}}
+
+
+
+
+// for ($i = 1; $i<=3; $i++) {
+
+// 	if (isset($_POST['inputactor'.$i])){
+// 	$stmt = $pdo->prepare("SELECT * FROM actors WHERE actorName=:actorName");
+// 	$stmt ->bindParam(':actorName',$_POST['inputactor'.$i]);
+// 	$stmt ->execute();
+// 	$actorCheck = $stmt->fetch(PDO::FETCH_ASSOC);
+// 		//if the actor does already exist
+// 		if ($actorCheck){
+// 			$addActor = $pdo->prepare('INSERT INTO actor_movies(movies_id, actor_id)
+// 			VALUES (:movieId, :actor_id)');
+// 			$addActor ->bindParam(':movieId', $movieId);
+// 			$addActor ->bindParam(':actor_id', $actor1Check['actor_id']);
+// 			$addActor -> execute();
+			
+// 		}
+// 		//if the actor does not already exist
+// 		else {
+// 			$newActor = $pdo->prepare('INSERT INTO actors(actorName)
+// 			VALUES (:actorName)');
+// 			$newActor->bindParam (':actorName',$_POST['inputactor'.$i]);
+// 			$newActor->execute();
+// 			$newActorId = $pdo->lastInsertId();
+// 			//after adding the new actor into the database, now we add the actor into actor_movies
+			
+// 			$addActor = $pdo->prepare('INSERT INTO actor_movies(movies_id, actor_id)
+// 			VALUES (:movieId, :actor_id)');
+// 			$addActor ->bindParam(':movieId', $movieId);
+// 			$addActor ->bindParam(':actor_id', $newActorId);
+// 			$addActor -> execute();	
+		
+// 		}
+
+// }}
 	if (isset($_FILES['upload'])){
 		var_dump($_FILES['upload']);
 	if ($_FILES['upload']['error']!= UPLOAD_ERR_OK) {
