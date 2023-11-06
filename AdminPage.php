@@ -29,7 +29,9 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 
 ?>
 <br/>
+
 <div id="bodycontent">
+<p class="title"> Add a movie</p>
 <form action ="AdminPageDoform.php" method ="POST" enctype="multipart/form-data">
 	Movie<br> <input type="text" name="inputmovieName" required><br>
 	Director<br> <input type="text" name="inputdirector" required><br>
@@ -104,14 +106,27 @@ if (!((isset($_SESSION['admin']))|| $_SESSION['admin'])){
 	<option value="Romance">Romance</option>
 	<option value="SciFi">Science Fiction</option>
 	<option value="Thriller">Thriller</option>
-	</select>
+	</select><br/>
 	<input type="submit" value="Add Movie">
+	</form>
+<br/>
+<p class ="title" >Enter in the Movie Name you would like to delete</p>
+<br/>
+<form action="deleteMovie.php" method ="POST">
+Movie Name:<br><input type="text" name ="movieName" required><br/>
+<input type="submit" value="Delete Movie">
+</form>
 
+<p class="title">Enter in the Comment you would like to delete</p>
+<form action="deleteMovie.php" method ="POST">
+Comment User:<br><input type="text" name ="commentName" required><br/>
+Movie Name:<br><input type="text" name="movieName" required><br/>
+<input type="submit" value="Delete Comment">
+</form>
 	
 <!-- image upload-->
 
 
-</form>
 </div>
 
 

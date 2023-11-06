@@ -7,13 +7,43 @@ dbConnect ();
 <head><title>Movie Discovery</title><link href="StyleSheet.css" rel="stylesheet"></head>
 
 <?php
+
+// if (isset($_SESSION['user_id'])){
+// 	$commentDisplay = "SELECT comments.commentContent, comments.dateAdded
+// 	FROM comments 
+// 	JOIN friends ON comments.user_id = friends.user2_id
+// 	WHERE friends.user_id = :user_id
+// 	ORDER BY comments.dateAdded DESC
+// 	LIMIT 10";
+// 	$stmt = $pdo->prepare($commentDisplay);
+// 	$userID = $_SESSION['user_id'];
+// 	$stmt ->bindParam(':user_id',$userID);	
+// 	$stmt -> execute();
+// }
+
+// while ($commentDisplay = $stmt->fetch()){
+// 	$commentUserID =$commentDisplay['user_id'];
+// 	$commentContent =$commentDisplay['commentContent'];
+// //fetch user
+// 	$sql ='SELECT * FROM users WHERE user_id = :user_id';
+// 	$stmt2 = $pdo->prepare($sql);
+// 	$stmt2->bindParam(':user_id',$commentUserID);
+// 	$stmt2->execute();
+// 	$userNameFetch =$stmt2->fetch();
+// 	$commentOwner = $userNameFetch['userName'];
+// 	$commentTime = $commentFetch['dateAdded'];
+
+// 	echo "<br/><p class =\"comments\">{$commentOwner}: ";
+// 	echo htmlentities($commentContent,ENT_QUOTES);
+// 	echo "$commentTime";
+// }
+
+
 $movieDisplay ='SELECT *
 FROM movies
 ORDER BY dateAdded DESC
 LIMIT 6';
-//$movieDisplay = 'SELECT * 
-//FROM movies 
-//LIMIT 5';
+
 $stmt = $pdo->prepare($movieDisplay);
 $stmt -> execute();
 
