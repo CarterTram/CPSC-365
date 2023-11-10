@@ -1,5 +1,6 @@
 <html>
 <head><title>Movie Page</title><link href=".\stylesheet.css" rel="stylesheet"></head>
+<h1></h1>
 <?php
 session_start();
 REQUIRE 'dbconnect.php';
@@ -92,7 +93,7 @@ dbConnect ();
         }
 			?>
                  <p class="movieName"><?php echo $movie['movieName']; ?></p>
-                <p class ="description"><?php echo $movie['description']; ?></p><br/>
+               <fieldset><legend>Description</legend> <p class ="description"><?php echo $movie['description']; ?></p></fieldset><br/>
                 <p>Directed By: <?php echo $movie['director'];?><br/>
                 Year: <?php echo$movie['yearReleased'];?></p>
 			            
@@ -138,16 +139,26 @@ if (isset($_SESSION['user_id'])){
 
 
                     
-                            echo "<br/><p class =\"comments\">{$commentOwner}: ";
+                            echo "<br/><p class =\"comments\">{$commentOwner}:";
                             echo htmlentities($commentContent,ENT_QUOTES);
                             echo "$commentTime";
+                            
 
                             if (isset($_SESSION['user_id'])){
 
                                 if ($commentUserID != $_SESSION['user_id']){
-                                    echo'<form action="addFriend.php" method ="POST">
-                                    <input type="submit" value ="Add Friend" class="None">
-                                    </form><br/>';
+                                    // echo'<form action="addFriend.php" method ="POST">
+                                // <input type="submit" value ="Add Friend" class="None>
+                                    // </form><br/>';
+                                    $senderID =$_SESSION['user_id'];
+                                    ?> <button id="fetch" 
+                                        data-sender= "<?php echo $senderID;?>" 
+                                        data-receiver= "<?php echo $commentUserID;?>"
+                                        data-status="Pending_Status">Send Friend Request</button>
+                                    <div id="response">hi</div>
+                                    <?php
+
+                                
                                 }
         
                             }
@@ -162,6 +173,7 @@ if (isset($_SESSION['user_id'])){
     </div>
 
 
-
+<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="friendRequest.js"></script>
 </body>
 </html>

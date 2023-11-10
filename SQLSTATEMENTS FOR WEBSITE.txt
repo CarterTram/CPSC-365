@@ -317,7 +317,7 @@ FR_ID INT AUTO_INCREMENT,
 user_id INT, 
 
 user2_id INT, 
-
+Pending_Status BOOLEAN,
 Accept_Status BOOLEAN,
 Reject_Status BOOLEAN,
 
