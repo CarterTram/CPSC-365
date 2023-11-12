@@ -17,7 +17,7 @@
 		}
 		
 		.centerDiv {
-			background-color: #eda8e3;
+			background-color: #a6d3f6;
 			border: none;
 			color: white;
 			padding: 15px 32px;
@@ -135,6 +135,12 @@
 	.comment-date {
 		color: #777;
 		font-size: 14px;
+	}
+	.add-friend-button{
+		background-color: #a6d3f6;
+		color:#090000;
+		border-color:white;
+		
 	}
 
 	

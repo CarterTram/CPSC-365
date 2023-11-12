@@ -13,10 +13,13 @@
 
 
         //delete the friend request
-        $stmt = $pdo->prepare('DELETE FROM Friend_Requests WHERE user_id = :id1 AND user2_id = :id2');
-        $stmt->bindParam(':id1',$sender);
-        $stmt->bindParam(':id2',$_POST['friend2']);
-        $stmt->execute();
+        $stmtUpdateRequest = $pdo->prepare('UPDATE Friend_Requests 
+        SET Pending_Status = FALSE, 
+            Accept_Status = TRUE 
+        WHERE user_id = :id1 AND user2_id = :id2');
+        $stmtUpdateRequest->bindParam(':id1', $sender);
+        $stmtUpdateRequest->bindParam(':id2', $_POST['friend2']);
+        $stmtUpdateRequest->execute();
 
         $response= array("message"=> "Friend accepted successfully.");
         echo json_encode($response);

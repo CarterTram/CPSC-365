@@ -9,19 +9,20 @@ dbConnect ();
 <?php
 
 //fetch friend requests
-$stmt =$pdo->prepare('SELECT * FROM Friend_Requests WHERE user_id =:userID');
+$stmt =$pdo->prepare('SELECT * FROM Friend_Requests WHERE user2_id =:userID');
 $stmt->bindParam('userID',$_SESSION['user_id']);
 $stmt->execute();
 while($friendRequestDisplay = $stmt->fetch()){
-	$friend2 = $friendRequestDisplay['user2_id'];
-	$stmt = $pdo->prepare('SELECT userName FROM users WHERE user_id =:userID ');
-	$stmt->bindParam(':userID',$friendRequestDisplay['user2_id']);
-	$stmt->execute();
-	$UserFriendRequest = $stmt->fetch();
+	if ($friendRequestDisplay['user_id']!=$_SESSION['user_id']){
+	$friend2 = $friendRequestDisplay['user_id'];
+	$stmt1 = $pdo->prepare('SELECT userName FROM users WHERE user_id =:userID ');
+	$stmt1->bindParam(':userID',$friendRequestDisplay['user_id']);
+	$stmt1->execute();
+	$UserFriendRequest = $stmt1->fetch();
 
 
 	?><div id="buttons">
-	<?php echo $UserFriendRequest['userName']; ?>
+	<br/>Friend Request From: <?php echo $UserFriendRequest['userName']; ?>
 	<button id="friendAccept" class="action_btn"
 	data-sender= "<?php echo $_SESSION['user_id'];?>"
 	data-friend2= "<?php echo $friend2;?>">
@@ -36,7 +37,7 @@ while($friendRequestDisplay = $stmt->fetch()){
 	<div id="response"></div>
 	
 	<?php 
-}
+}}
 ?>
 
 <form class = "search-bar-container" method="get" action="index.php">

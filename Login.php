@@ -6,8 +6,6 @@ session_start ();
 REQUIRE 'header.php';
 REQUIRE 'dbconnect.php';
 dbConnect();
-echo 'Username: '.$_POST['username'].'<br>';
-echo 'Password: '.$_POST['password'].'<br>';
 $username= $_POST['username'];
 $password= $_POST['password'];
 $sql = "SELECT * FROM users WHERE userName = :username";

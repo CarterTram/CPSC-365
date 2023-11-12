@@ -128,13 +128,24 @@ if (isset($_SESSION['user_id'])){
                 $userNameFetch =$stmt2->fetch();
                 $commentOwner = $userNameFetch['userName'];
                 $commentTime = $commentFetch['dateAdded'];
-                
-                $checkFriendStatus = 'SELECT user2_id FROM friends WHERE user_id=:user_id AND user2_id =:user2_id';
-                $CheckFriend = $pdo->prepare($checkFriendStatus);
-                $CheckFriend ->bindParam(':user_id',$_SESSION['user_id']);
-                $CheckFriend->bindParam(':user2_id',$commentUserID);
-                $CheckFriend->execute();
-                $areFriends =$CheckFriend->fetch();
+
+                $checkFriendship = 'SELECT user2_id FROM friends 
+                    WHERE (user_id = :user_id AND user2_id = :user2_id) 
+                       OR (user_id = :user2_id AND user2_id = :user_id)';
+                $checkFriendshipStmt = $pdo->prepare($checkFriendship);
+                $checkFriendshipStmt->bindParam(':user_id', $_SESSION['user_id']);
+                $checkFriendshipStmt->bindParam(':user2_id', $commentUserID);
+                $checkFriendshipStmt->execute();
+                $areFriends = $checkFriendshipStmt->fetch();
+
+                $checkFriendRequest = 'SELECT FR_ID FROM Friend_Requests 
+                       WHERE (user2_id = :user2_id AND user_id =:user_id AND Pending_Status = 1) 
+                          OR (user_id = :user2_id AND user2_id = :user_id AND Pending_Status = 1)';
+                $friendRequestStmt = $pdo->prepare($checkFriendRequest);
+                $friendRequestStmt->bindParam(':user2_id', $_SESSION['user_id']);
+                $friendRequestStmt->bindParam(':user_id', $commentUserID); // Bind comment owner ID
+                $friendRequestStmt->execute();
+                $friendRequestExist = $friendRequestStmt->fetch();
 
     
                     
@@ -147,9 +158,9 @@ if (isset($_SESSION['user_id'])){
 
                 <?php
                 //if they aren't friend show friend request button
-                    if ($commentUserID != $_SESSION['user_id'] && !$areFriends){
+                    if ($commentUserID != $_SESSION['user_id'] && !$areFriends && !$friendRequestExist ){
                         $senderID =$_SESSION['user_id'];
-                        ?> <button id="fetch" 
+                        ?> <button class="add-friend-button" id="fetch" 
                             data-sender= "<?php echo $senderID;?>" 
                             data-receiver= "<?php echo $commentUserID;?>"
                             data-status="Pending_Status">Send Friend Request</button>
