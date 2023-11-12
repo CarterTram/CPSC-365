@@ -128,40 +128,36 @@ if (isset($_SESSION['user_id'])){
                 $userNameFetch =$stmt2->fetch();
                 $commentOwner = $userNameFetch['userName'];
                 $commentTime = $commentFetch['dateAdded'];
+                
+                $checkFriendStatus = 'SELECT user2_id FROM friends WHERE user_id=:user_id AND user2_id =:user2_id';
+                $CheckFriend = $pdo->prepare($checkFriendStatus);
+                $CheckFriend ->bindParam(':user_id',$_SESSION['user_id']);
+                $CheckFriend->bindParam(':user2_id',$commentUserID);
+                $CheckFriend->execute();
+                $areFriends =$CheckFriend->fetch();
 
     
                     
-                ?>
+                ?></div>
+                    <div class="friend-comment">
+                        <p><?php echo $commentOwner; ?> said:</p>
+                        <p><?php echo $commentContent; ?></p>
+                        <p class="comment-date"><?php echo $commentTime; ?></p>
+                    </div>
 
                 <?php
-
-         //Display comments
-
+                //if they aren't friend show friend request button
+                    if ($commentUserID != $_SESSION['user_id'] && !$areFriends){
+                        $senderID =$_SESSION['user_id'];
+                        ?> <button id="fetch" 
+                            data-sender= "<?php echo $senderID;?>" 
+                            data-receiver= "<?php echo $commentUserID;?>"
+                            data-status="Pending_Status">Send Friend Request</button>
+                        <div id="response"></div>
+                        <?php
 
                     
-                            echo "<br/><p class =\"comments\">{$commentOwner}:<br/>";
-                            echo htmlentities($commentContent,ENT_QUOTES);
-                            echo "<br/>$commentTime";
-                            
-
-                            if (isset($_SESSION['user_id'])){
-
-                                if ($commentUserID != $_SESSION['user_id']){
-                                    // echo'<form action="addFriend.php" method ="POST">
-                                // <input type="submit" value ="Add Friend" class="None>
-                                    // </form><br/>';
-                                    $senderID =$_SESSION['user_id'];
-                                    ?> <button id="fetch" 
-                                        data-sender= "<?php echo $senderID;?>" 
-                                        data-receiver= "<?php echo $commentUserID;?>"
-                                        data-status="Pending_Status">Send Friend Request</button>
-                                    <div id="response">hi</div>
-                                    <?php
-
-                                
-                                }
-        
-                            }
+                            }  
 
                            echo'</p>';
                }

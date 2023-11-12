@@ -34,8 +34,19 @@ while($friendRequestDisplay = $stmt->fetch()){
 
 	</div><br/>
 	<div id="response"></div>
-	<?php
+	
+	<?php 
 }
+?>
+
+<form class = "search-bar-container" method="get" action="index.php">
+    <label for="search">Search Movies:</label>
+    <input class = "search-input" type="text" id="search" name="search" placeholder="Enter movie name">
+    <input class = "search-button"type="submit" value="Search">
+</form>
+
+<?php
+
 
 // Fetch 10 most recent comments from friends
 $stmt = $pdo->prepare('SELECT comments.commentContent, comments.dateAdded, users.userName
@@ -58,11 +69,6 @@ while ($comment = $stmt->fetch()) {
     <?php
 }?>
 
-<form method="get" action="index.php">
-    <label for="search">Search Movies:</label>
-    <input type="text" id="search" name="search" placeholder="Enter movie name">
-    <input type="submit" value="Search">
-</form>
 
 <?php
 // Search movies
