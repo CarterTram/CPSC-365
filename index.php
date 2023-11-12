@@ -67,6 +67,27 @@ while($friendRequestDisplay = $stmt->fetch()){
 	<?php
 }
 
+// Fetch 10 most recent comments from friends
+$stmt = $pdo->prepare('SELECT comments.commentContent, comments.dateAdded, u.userName
+                      FROM comments 
+                      JOIN friends  ON (comments.user_id = friends.user2_id AND friends.user_id = :userID)
+                      JOIN users  ON comments.user_id = users.user_id
+                      ORDER BY comments.dateAdded DESC
+                      LIMIT 10');
+$stmt->bindParam(':userID', $_SESSION['user_id']);
+$stmt->execute();
+
+// Display the comments
+while ($comment = $stmt->fetch()) {
+    ?>
+    <div class="friend-comment">
+        <p><?php echo $comment['userName']; ?> said:</p>
+        <p><?php echo $comment['commentContent']; ?></p>
+        <p class="comment-date"><?php echo $comment['dateAdded']; ?></p>
+    </div>
+    <?php
+}
+
 
 //fetch movies
 $movieDisplay ='SELECT *
