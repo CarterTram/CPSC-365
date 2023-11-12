@@ -257,9 +257,7 @@ friend_id INT AUTO_INCREMENT,
 
 user_id INT, 
 
-user2_id INT, 
-
-TotalFriends INT,  
+user2_id INT,   
 
 DateAdded DATE NOT NULL,  
 

@@ -38,7 +38,37 @@ dbConnect ();
 // 	echo "$commentTime";
 // }
 
+//fetch friend requests
+$stmt =$pdo->prepare('SELECT * FROM Friend_Requests WHERE user_id =:userID');
+$stmt->bindParam('userID',$_SESSION['user_id']);
+$stmt->execute();
+while($friendRequestDisplay = $stmt->fetch()){
+	$friend2 = $friendRequestDisplay['user2_id'];
+	$stmt = $pdo->prepare('SELECT userName FROM users WHERE user_id =:userID ');
+	$stmt->bindParam(':userID',$friendRequestDisplay['user2_id']);
+	$stmt->execute();
+	$UserFriendRequest = $stmt->fetch();
 
+
+	?><div id="buttons">
+	<?php echo $UserFriendRequest['userName']; ?>
+	<button id="friendAccept" class="action_btn"
+	data-sender= "<?php echo $_SESSION['user_id'];?>"
+	data-friend2= "<?php echo $friend2;?>">
+	Accept</button>
+	
+	<button id="friendReject" class="action_btn"
+	data-sender= "<?php echo $_SESSION['user_id'];?>"
+	data-friend2= "<?php echo $friend2;?>">
+	Reject</button>
+
+	</div><br/>
+	<div id="response"></div>
+	<?php
+}
+
+
+//fetch movies
 $movieDisplay ='SELECT *
 FROM movies
 ORDER BY dateAdded DESC
@@ -63,7 +93,10 @@ while ($movieCheck = $stmt -> fetch()){
 	echo "<br/><p class =\"description\">Directed By: {$movieCheck['director']}</p>";
 	
 }
+
 ?>
+<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="friendRequest.js"></script>
 
 </body>
 </html>

@@ -89,5 +89,15 @@
 		color:black;
 	}
 
+	.buttons {
+		width: 500px;
+		margin: 0 auto;
+		display: inline;}
+		
+	.action_btn {
+		width: 100px;
+		margin: 0 auto;
+		display: inline;}
+
 	
 
