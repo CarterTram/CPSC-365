@@ -139,9 +139,9 @@ if (isset($_SESSION['user_id'])){
 
 
                     
-                            echo "<br/><p class =\"comments\">{$commentOwner}:";
+                            echo "<br/><p class =\"comments\">{$commentOwner}:<br/>";
                             echo htmlentities($commentContent,ENT_QUOTES);
-                            echo "$commentTime";
+                            echo "<br/>$commentTime";
                             
 
                             if (isset($_SESSION['user_id'])){
