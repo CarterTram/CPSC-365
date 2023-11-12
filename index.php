@@ -56,39 +56,60 @@ while ($comment = $stmt->fetch()) {
         <p class="comment-date"><?php echo $comment['dateAdded']; ?></p>
     </div>
     <?php
-}
+}?>
 
+<form method="get" action="index.php">
+    <label for="search">Search Movies:</label>
+    <input type="text" id="search" name="search" placeholder="Enter movie name">
+    <input type="submit" value="Search">
+</form>
 
+<?php
+// Search movies
+	if (isset($_GET['search'])) {
+		$searchQuery = '%' . $_GET['search'] . '%';
+		$movieDisplay = "SELECT *
+						FROM movies
+						WHERE movieName LIKE :searchQuery
+						ORDER BY dateAdded DESC
+						LIMIT 6";
 
-//fetch movies
-$movieDisplay ='SELECT *
-FROM movies
-ORDER BY dateAdded DESC
-LIMIT 6';
-
-$stmt = $pdo->prepare($movieDisplay);
-$stmt -> execute();
-
-//SHOW SOME MOVIES AT THE HOMEPAGE
-while ($movieCheck = $stmt -> fetch()){
-	$movieId = $movieCheck['movies_id'];	
-	$filepath = "uploads/{$movieId}_thumbnail.jpeg";
-	if(file_exists($filepath)){	
-		//echo "<img src='{$filepath}'/><br/>";
-		echo "<br/><img src='".$filepath."'/><br/>";
+		$stmt = $pdo->prepare($movieDisplay);
+		$stmt->bindParam(':searchQuery',$searchQuery);
 	}
-	
-	$url = "moviePage.php?id={$movieId}";
-	$linkurl = "<h1><a href='{$url}'>{$movieCheck['movieName']}</a></h1>";
-	echo $linkurl;
-	echo "<br/><p class =\"description\">{$movieCheck['description']}</p>";
-	echo "<br/><p class =\"description\">Directed By: {$movieCheck['director']}</p>";
-	
-}
 
-?>
-<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="friendRequest.js"></script>
 
-</body>
-</html>
+	else{
+	//fetch movies
+	$movieDisplay ='SELECT *
+	FROM movies
+	ORDER BY dateAdded DESC
+	LIMIT 6';
+
+	$stmt = $pdo->prepare($movieDisplay);
+	}
+	$stmt -> execute();
+
+	//SHOW SOME MOVIES AT THE HOMEPAGE
+	while ($movieCheck = $stmt -> fetch()){
+		$movieId = $movieCheck['movies_id'];	
+		$filepath = "uploads/{$movieId}_thumbnail.jpeg";
+		if(file_exists($filepath)){	
+			//echo "<img src='{$filepath}'/><br/>";
+			echo "<br/><img src='".$filepath."'/><br/>";
+		}
+		
+		$url = "moviePage.php?id={$movieId}";
+		$linkurl = "<h1><a href='{$url}'>{$movieCheck['movieName']}</a></h1>";
+		echo $linkurl;
+		echo "<br/><p class =\"description\">{$movieCheck['description']}</p>";
+		echo "<br/><p class =\"description\">Directed By: {$movieCheck['director']}</p>";
+		
+	}
+
+	?>
+	<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+	<script type="text/javascript" src="friendRequest.js"></script>
+
+	</body>
+	</html>
