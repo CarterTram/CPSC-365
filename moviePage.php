@@ -128,16 +128,26 @@ if (isset($_SESSION['user_id'])){
                 $userNameFetch =$stmt2->fetch();
                 $commentOwner = $userNameFetch['userName'];
                 $commentTime = $commentFetch['dateAdded'];
-
-                $checkFriendship = 'SELECT user2_id FROM friends 
-                    WHERE (user_id = :user_id AND user2_id = :user2_id) 
-                       OR (user_id = :user2_id AND user2_id = :user_id)';
+//check if friendship exist
+                $checkFriendship = 'SELECT FR_ID FROM Friend_Requests 
+                WHERE (user2_id = :user2_id AND user_id =:user_id AND Accept_Status = 1) 
+                   OR (user_id = :user2_id AND user2_id = :user_id AND Accept_Status = 1)';
                 $checkFriendshipStmt = $pdo->prepare($checkFriendship);
                 $checkFriendshipStmt->bindParam(':user_id', $_SESSION['user_id']);
                 $checkFriendshipStmt->bindParam(':user2_id', $commentUserID);
                 $checkFriendshipStmt->execute();
                 $areFriends = $checkFriendshipStmt->fetch();
+                // $checkFriendship = 'SELECT user2_id FROM friends 
+                //     WHERE (user_id = :user_id AND user2_id = :user2_id) 
+                //        OR (user_id = :user2_id AND user2_id = :user_id)';
+                // $checkFriendshipStmt = $pdo->prepare($checkFriendship);
+                // $checkFriendshipStmt->bindParam(':user_id', $_SESSION['user_id']);
+                // $checkFriendshipStmt->bindParam(':user2_id', $commentUserID);
+                // $checkFriendshipStmt->execute();
+                // $areFriends = $checkFriendshipStmt->fetch();
+//check if the friend request exiists
 
+    
                 $checkFriendRequest = 'SELECT FR_ID FROM Friend_Requests 
                        WHERE (user2_id = :user2_id AND user_id =:user_id AND Pending_Status = 1) 
                           OR (user_id = :user2_id AND user2_id = :user_id AND Pending_Status = 1)';

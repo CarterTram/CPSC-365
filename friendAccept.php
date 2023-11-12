@@ -14,9 +14,11 @@
 
         //delete the friend request
         $stmtUpdateRequest = $pdo->prepare('UPDATE Friend_Requests 
-        SET Pending_Status = FALSE, 
+        SET Pending_Status = FALSE,
+            Reject_Status = FALSE, 
             Accept_Status = TRUE 
-        WHERE user_id = :id1 AND user2_id = :id2');
+        WHERE (user_id = :id1 AND user2_id = :id2) 
+        OR (user_id =:id2 AND user2_id=:id1)');
         $stmtUpdateRequest->bindParam(':id1', $sender);
         $stmtUpdateRequest->bindParam(':id2', $_POST['friend2']);
         $stmtUpdateRequest->execute();

@@ -10,7 +10,8 @@ if (isset($_POST['friend1'])) {
     $stmtRejectRequest = $pdo->prepare('UPDATE Friend_Requests 
                                        SET Reject_Status = TRUE, 
                                            Pending_Status = FALSE 
-                                       WHERE user_id = :id1 AND user2_id = :id2');
+                                       WHERE (user_id = :id1 AND user2_id = :id2) 
+                                       OR (user_id =:id2 AND user2_id=:id1)');
     $stmtRejectRequest->bindParam(':id1', $sender);
     $stmtRejectRequest->bindParam(':id2', $_POST['friend2']);
     $stmtRejectRequest->execute();

@@ -1,14 +1,5 @@
 $(document).ready(function () {
 
-    // var sender = $('#fetch').data('sender');
-    // var receiver = $('#fetch').data('receiver');
-    // var friendstatus = $('#fetch').data('status');
-    
-    // var postData = {
-    //     sender: sender,
-    //     receiver: receiver
-    // };
-
     $('#fetch').click(function () {
         $("#fetch").hide();
         var sender = $(this).data('sender');
