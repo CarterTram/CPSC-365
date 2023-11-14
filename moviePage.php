@@ -109,6 +109,7 @@ if (isset($_SESSION['user_id'])){
 <input type="submit" value="Comment" >
 </form>
 </p>
+<div id="response"></div>
 <?php
 }
           
@@ -154,19 +155,28 @@ if (isset($_SESSION['user_id'])){
                 $friendRequestStmt = $pdo->prepare($checkFriendRequest);
                 $friendRequestStmt->bindParam(':user2_id', $_SESSION['user_id']);
                 $friendRequestStmt->bindParam(':user_id', $commentUserID); // Bind comment owner ID
-                $friendRequestStmt->execute();
+                $friendRequestStmt->execute();      
                 $friendRequestExist = $friendRequestStmt->fetch();
 
     
                     
                 ?></div>
-                    <div class="friend-comment">
+                <div class="friend-comment">
+                    <div class="comment-content">
                         <p><?php echo $commentOwner; ?> said:</p>
                         <p><?php echo $commentContent; ?></p>
                         <p class="comment-date"><?php echo $commentTime; ?></p>
                     </div>
-
                 <?php
+                    if (((isset($_SESSION['admin']))&& $_SESSION['admin'])){
+                ?>
+                    <form class="delete-comment-form" action="deleteComment.php" method="POST">
+                        <input type="hidden" name="commentID" value="<?php echo $commentID; ?>">
+                        <input type="submit" value="Delete Comment">
+                    </form>
+                    </div>
+                <?php
+                    }
                 //if they aren't friend show friend request button
                     if ($commentUserID != $_SESSION['user_id'] && !$areFriends && !$friendRequestExist ){
                         $senderID =$_SESSION['user_id'];
@@ -174,13 +184,11 @@ if (isset($_SESSION['user_id'])){
                             data-sender= "<?php echo $senderID;?>" 
                             data-receiver= "<?php echo $commentUserID;?>"
                             data-status="Pending_Status">Send Friend Request</button>
-                        <div id="response"></div>
+                        
                         <?php
 
                     
                             }  
-
-                           echo'</p>';
                }
 
         

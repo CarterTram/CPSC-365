@@ -142,6 +142,13 @@
 		border-color:white;
 		
 	}
+	#response{
+		color:#090000;
+	}
+	.friend-comment {
+		display: flex;
+		justify-content: space-between;
+	}
 
 	
 

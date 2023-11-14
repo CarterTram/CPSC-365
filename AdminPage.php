@@ -117,12 +117,12 @@ Movie Name:<br><input type="text" name ="movieName" required><br/>
 <input type="submit" value="Delete Movie">
 </form>
 
-<p class="title">Enter in the Comment you would like to delete</p>
+<!-- <p class="title">Enter in the Comment you would like to delete</p>
 <form action="deleteMovie.php" method ="POST">
 Comment User:<br><input type="text" name ="commentName" required><br/>
 Movie Name:<br><input type="text" name="movieName" required><br/>
 <input type="submit" value="Delete Comment">
-</form>
+</form> -->
 	
 <!-- image upload-->
 

@@ -9,7 +9,7 @@ dbConnect ();
 <?php
 
 //fetch friend requests
-$stmt =$pdo->prepare('SELECT * FROM Friend_Requests WHERE user2_id =:userID');
+$stmt =$pdo->prepare('SELECT * FROM Friend_Requests WHERE user2_id =:userID AND Pending_Status = 1');
 $stmt->bindParam('userID',$_SESSION['user_id']);
 $stmt->execute();
 while($friendRequestDisplay = $stmt->fetch()){
