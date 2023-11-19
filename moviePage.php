@@ -72,15 +72,15 @@ dbConnect ();
                     echo ' 
                     <form class="rating-form" action="movieRating.php" method="POST">
                         <p class="rating-label">Rate this movie:</p>
-                        <label for="rating-5" class="rating-star">1★</label>
+                        <label for="rating-1" class="rating-star">1★</label>
                         <input type="radio" name="rating" value="1" id="rating-1" class="rating-input">
-                        <label for="rating-4" class="rating-star">2★</label>
+                        <label for="rating-2" class="rating-star">2★</label>
                         <input type="radio" name="rating" value="2" id="rating-2" class="rating-input">
                         <label for="rating-3" class="rating-star">3★</label>
                         <input type="radio" name="rating" value="3" id="rating-3" class="rating-input">
-                        <label for="rating-2" class="rating-star">4★</label>
+                        <label for="rating-4" class="rating-star">4★</label>
                         <input type="radio" name="rating" value="4" id="rating-4" class="rating-input">
-                        <label for="rating-1" class="rating-star">5★</label>
+                        <label for="rating-5" class="rating-star">5★</label>
                         <input type="radio" name="rating" value="5" id="rating-5" class="rating-input">
                         <input type="submit" value="Submit Rating">
                         <input type="hidden" id="movieIDTransfer" name="movieID" value="'.$movieId.'">
@@ -121,6 +121,7 @@ if (isset($_SESSION['user_id'])){
             while ($commentFetch = $stmt->fetch()){
                 $commentUserID =$commentFetch['user_id'];
                 $commentContent =$commentFetch['commentContent'];
+                $commentID = $commentFetch['comments_id'];
          //fetch user
                 $sql ='SELECT * FROM users WHERE user_id = :user_id';
                 $stmt2 = $pdo->prepare($sql);
@@ -162,12 +163,24 @@ if (isset($_SESSION['user_id'])){
                     
                 ?></div>
                 <div class="friend-comment">
-                    <div class="comment-content">
-                        <p><?php echo $commentOwner; ?> said:</p>
-                        <p><?php echo $commentContent; ?></p>
-                        <p class="comment-date"><?php echo $commentTime; ?></p>
-                    </div>
+                <div class="comment-content">
+                    <!-- <p><?php echo htmlentities($commentOwner); ?> -->
+                    <p><a href="mainProfile.php?user_id=<?php echo htmlentities($commentUserID); ?>"><?php echo htmlentities($commentOwner); ?></a> said:</p>
+                    <p><?php echo htmlentities($commentContent); ?></p>
+                    <p class="comment-date"><?php echo htmlentities($commentTime); ?></p>
+                </div>
                 <?php
+                if ($commentUserID != $_SESSION['user_id'] && !$areFriends && !$friendRequestExist ){
+                    $senderID =$_SESSION['user_id'];
+                    ?> <button class="add-friend-button" id="fetch" 
+                        data-sender= "<?php echo $senderID;?>" 
+                        data-receiver= "<?php echo $commentUserID;?>"
+                        data-status="Pending_Status">Send Friend Request</button>
+                   
+                    <?php
+
+                
+                        }  
                     if (((isset($_SESSION['admin']))&& $_SESSION['admin'])){
                 ?>
                     <form class="delete-comment-form" action="deleteComment.php" method="POST">
@@ -175,20 +188,12 @@ if (isset($_SESSION['user_id'])){
                         <input type="submit" value="Delete Comment">
                     </form>
                     </div>
+
+                   
                 <?php
                     }
                 //if they aren't friend show friend request button
-                    if ($commentUserID != $_SESSION['user_id'] && !$areFriends && !$friendRequestExist ){
-                        $senderID =$_SESSION['user_id'];
-                        ?> <button class="add-friend-button" id="fetch" 
-                            data-sender= "<?php echo $senderID;?>" 
-                            data-receiver= "<?php echo $commentUserID;?>"
-                            data-status="Pending_Status">Send Friend Request</button>
-                        
-                        <?php
 
-                    
-                            }  
                }
 
         

@@ -237,7 +237,9 @@ ratingValue INT NOT NULL,
 
 movies_id INT, 
 
-user_id INT, 
+user_id INT,
+
+dateAdded DATE,
 
 PRIMARY KEY (rating_id), 
 
