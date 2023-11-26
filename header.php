@@ -20,7 +20,9 @@ if (isset($_SESSION['user_id'])) {
 echo'<form action="logout.php" method ="POST">
 <input type="submit" class = "headbutton" value= "Logout">
 </form>';
-	
+echo'<form action="mainProfile.php" method ="POST">
+<input type="submit" class = "headbutton" value= "Main Profile">
+</form>';
 }
 else {
 
@@ -32,6 +34,7 @@ echo'
 	<input type="submit" class ="headbutton" value= "Login">
 	</form>';
 }
+
 
 
 //<form action="registrationPage.php" method="POST">

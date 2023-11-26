@@ -20,7 +20,9 @@ $stmt1 = $pdo->prepare($dateAdded);
 $stmt1 -> bindParam(':comments_id',$commentID);
 $stmt1->execute();
 echo 'date added';
-header("Location:index.php");
+
+header("Location:moviePage.php?id={$movieID}");
+
 ?>
     
 

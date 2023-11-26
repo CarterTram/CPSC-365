@@ -5,21 +5,28 @@
 <?php
 session_start();
 REQUIRE 'dbconnect.php';
+REQUIRE 'header.php';
 dbConnect ();
 $stmt = $pdo->prepare('SELECT userName, favoriteMovie FROM users
 						WHERE user_id = :userID');
-$stmt->bindParam(':userID',$_GET['user_id']);
+if (isset($_GET['user_id'])) {
+    $pageID = $_GET['user_id'];
+}
+else {
+    $pageID = $_SESSION['user_id'];
+}
+$stmt->bindParam(':userID',$pageID);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $upload_location = 'uploads/';
-$thumbnailName = $upload_location . $_GET['user_id'] . '_pfp.jpeg';
+$thumbnailName = $upload_location . $pageID . '_pfp.jpeg';
 $friendsQuery = $pdo->prepare('SELECT users.userName FROM friends INNER JOIN users ON friends.user2_id = users.user_id WHERE friends.user_id = :userID');
-$friendsQuery->bindParam(':userID', $_GET['user_id']);
+$friendsQuery->bindParam(':userID', $pageID);
 $friendsQuery->execute();
 $friendsList = $friendsQuery->fetchAll(PDO::FETCH_COLUMN);
 
-	if ($_GET['user_id'] ==$_SESSION['user_id']){
+	if ($pageID ==$_SESSION['user_id']){
 ?>
 		<p> Profile Picture
 		<form action ="profilePicture.php"  method ="POST" enctype="multipart/form-data">
@@ -67,7 +74,7 @@ $friendsList = $friendsQuery->fetchAll(PDO::FETCH_COLUMN);
         JOIN movies ON ratings.movies_id = movies.movies_id 
         WHERE ratings.user_id = :user_id 
         ORDER BY ratings.dateAdded DESC');
-        $stmt->bindParam(':user_id', $_GET['user_id']);
+        $stmt->bindParam(':user_id', $pageID);
         $stmt->execute();
         $ratings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -76,6 +83,35 @@ $friendsList = $friendsQuery->fetchAll(PDO::FETCH_COLUMN);
         }
     ?>
 	</div>
+    <div class="recommendations">
+    <?php 
+
+        $stmt = $pdo->prepare('SELECT movies.movieName, AVG(ratings.ratingValue) AS avg_rating 
+        FROM ratings 
+        JOIN movies ON ratings.movies_id = movies.movies_id 
+        WHERE ratings.user_id IN (
+            SELECT user2_id FROM friends WHERE user_id = :userID
+        )
+        GROUP BY movies.movieName 
+        ORDER BY avg_rating DESC 
+        LIMIT 10');
+        $stmt->bindParam(':userID', $pageID);
+        $stmt->execute();
+        $topMovies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        
+    
+    ?>
+    <div class="top-movies">
+    <h3>Top 10 Movies Rated Highest by Friends</h3>
+    <ul>
+        <?php
+        foreach ($topMovies as $movie) {
+            echo '<li>' . htmlspecialchars($movie['movieName']) . ' (Average Rating: ' . number_format($movie['avg_rating'], 1) . ')</li>';
+        }
+        ?>
+    </ul>
+</div>
 
 <body>
 
