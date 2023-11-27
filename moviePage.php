@@ -47,6 +47,13 @@ dbConnect ();
                     
                 }
                 echo "</p>";
+        //fetch average ratings
+                $stmt= $pdo->prepare("SELECT ROUND(AVG(ratingValue), 1) as avgRate FROM ratings WHERE movies_id =:movieId");
+                $stmt->bindParam(':movieId', $movieId);
+                $stmt->execute();
+                $averageRating = $stmt->fetch();
+                echo "Ratings: ".$averageRating["avgRate"]; 
+    
 
     
             }
@@ -88,7 +95,7 @@ dbConnect ();
                 }
             else {
 
-                echo "Your rating for this movie is: {$ratingFetch['ratingValue']}";    
+                echo "<br/>Your rating for this movie is: {$ratingFetch['ratingValue']}";    
             }
         }
 			?>

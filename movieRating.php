@@ -9,13 +9,13 @@ $ratingNum = (int)$rating;
 $movieID = $_POST['movieID'];
 $userID = $_SESSION['user_id'];
 echo $ratingNum;
-$sql = 'INSERT INTO ratings(ratingValue,movies_id,user_id) VALUES (:rating,:mID,:userID)';
+$sql = 'INSERT INTO ratings(ratingValue,movies_id,user_id,dateAdded) VALUES (:rating,:mID,:userID, NOW())';
 $stmt=$pdo->prepare($sql);
 $stmt->bindParam(':rating',$ratingNum);
 $stmt->bindParam(':mID',$movieID);
 $stmt->bindParam(':userID',$userID);
 $stmt->execute();
-header("Location:index.php");
+header("Location:moviePage.php?id=$movieID");
 ?>
     
 

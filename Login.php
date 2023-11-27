@@ -34,7 +34,7 @@ else  {
 	else {
 		
 		echo 'Such account does not exist';
-		header("Location: index.php");
+		header("Location: mainProfile.php");
 		exit();
 	
 	
