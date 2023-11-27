@@ -39,4 +39,5 @@ if (isset($_FILES['uploadPFP'])){
 
 
 }		
+header("Location:mainProfile.php");
 ?>

@@ -52,7 +52,7 @@ dbConnect ();
                 $stmt->bindParam(':movieId', $movieId);
                 $stmt->execute();
                 $averageRating = $stmt->fetch();
-                echo "Ratings: ".$averageRating["avgRate"]; 
+                echo "Average of Ratings: ".$averageRating["avgRate"]; 
     
 
     

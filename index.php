@@ -51,11 +51,13 @@ while($friendRequestDisplay = $stmt->fetch()){
 
 // Fetch 10 most recent comments from friends
 $stmt = $pdo->prepare('SELECT comments.commentContent, comments.dateAdded, users.userName
-                      FROM comments 
-                      JOIN friends  ON (comments.user_id = friends.user2_id AND friends.user_id = :userID)
-                      JOIN users  ON comments.user_id = users.user_id
-                      ORDER BY comments.dateAdded DESC
-                      LIMIT 10');
+	FROM comments 
+	JOIN users ON comments.user_id = users.user_id
+	JOIN friends ON (comments.user_id = friends.user2_id AND friends.user_id = :userID)
+				OR (comments.user_id = friends.user_id AND friends.user2_id = :userID)
+	WHERE comments.user_id = :userID OR friends.user_id IS NOT NULL
+	ORDER BY comments.dateAdded DESC
+	LIMIT 10');
 $stmt->bindParam(':userID', $_SESSION['user_id']);
 $stmt->execute();
 
@@ -125,7 +127,7 @@ while ($comment = $stmt->fetch()) {
 			SELECT CASE 
 				WHEN FR.user_id = :userID THEN FR.user2_id 
 				ELSE FR.user_id 
-				END AS friend_id
+				END 
 						FROM Friend_Requests FR 
 						WHERE (FR.user_id = :userID OR FR.user2_id = :userID) 
 						AND FR.Accept_Status = 1
@@ -165,5 +167,5 @@ while ($comment = $stmt->fetch()) {
 	<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="friendRequest.js"></script>
 
-	</body>
+		</body>
 	</html>

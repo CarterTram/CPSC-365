@@ -7,6 +7,37 @@ session_start();
 REQUIRE 'dbconnect.php';
 REQUIRE 'header.php';
 dbConnect ();
+
+//fetch friend requests
+$stmt =$pdo->prepare('SELECT * FROM Friend_Requests WHERE user2_id =:userID AND Pending_Status = 1');
+$stmt->bindParam('userID',$_SESSION['user_id']);
+$stmt->execute();
+while($friendRequestDisplay = $stmt->fetch()){
+	if ($friendRequestDisplay['user_id']!=$_SESSION['user_id']){
+	$friend2 = $friendRequestDisplay['user_id'];
+	$stmt1 = $pdo->prepare('SELECT userName FROM users WHERE user_id =:userID ');
+	$stmt1->bindParam(':userID',$friendRequestDisplay['user_id']);
+	$stmt1->execute();
+	$UserFriendRequest = $stmt1->fetch();
+
+
+	?><div id="buttons">
+	<br/>Friend Request From: <?php echo $UserFriendRequest['userName']; ?>
+	<button id="friendAccept" class="action_btn"
+	data-sender= "<?php echo $_SESSION['user_id'];?>"
+	data-friend2= "<?php echo $friend2;?>">
+	Accept</button>
+	
+	<button id="friendReject" class="action_btn"
+	data-sender= "<?php echo $_SESSION['user_id'];?>"
+	data-friend2= "<?php echo $friend2;?>">
+	Reject</button>
+
+	</div><br/>
+	<div id="response"></div>
+	
+	<?php 
+}}
 $stmt = $pdo->prepare('SELECT userName, favoriteMovie FROM users
 						WHERE user_id = :userID');
 if (isset($_GET['user_id'])) {
@@ -66,15 +97,25 @@ $friendsList = $friendsQuery->fetchAll(PDO::FETCH_COLUMN);
 
         ?>
     </div>
-    <?php  
-    //fetch ratings
+    <?php
+    	if ($pageID ==$_SESSION['user_id']){
+    //fetch ratings, //the select case will filter out the case of when
+    //the friend request is found but the user_id could be the current user or vice versa, this 
+    //elminates the double results and always make sure to get the friend_id.
         $stmt = $pdo->prepare('SELECT ratings.ratingValue, ratings.movies_id, users.userName AS userName, movies.movieName 
-        FROM ratings 
-            JOIN users ON ratings.user_id = users.user_id 
-            JOIN Friend_Requests AS FR ON (ratings.user_id = FR.user_id OR ratings.user_id = FR.user2_id)
-            JOIN movies ON ratings.movies_id = movies.movies_id 
-        WHERE (FR.user_id = :userID OR FR.user2_id = :userID)
-        AND FR.Accept_Status = 1
+        FROM ratings
+        JOIN users ON ratings.user_id = users.user_id
+        JOIN movies ON ratings.movies_id = movies.movies_id 
+        JOIN Friend_Requests ON (ratings.user_id = Friend_Requests.user_id OR ratings.user_id = Friend_Requests.user2_id)
+        WHERE ratings.user_id IN (
+            SELECT CASE 
+                WHEN Friend_Requests.user_id = :userID THEN Friend_Requests.user2_id 
+                ELSE Friend_Requests.user_id 
+            END AS friend_id
+            FROM Friend_Requests 
+            WHERE (Friend_Requests.user_id = :userID OR Friend_Requests.user2_id = :userID) 
+            AND Friend_Requests.Accept_Status = 1
+        )
         ORDER BY ratings.dateAdded DESC 
         LIMIT 10');
 
@@ -90,20 +131,19 @@ $friendsList = $friendsQuery->fetchAll(PDO::FETCH_COLUMN);
     <div class="recommendations">
     <?php 
 
-        $stmt = $pdo->prepare('SELECT movies.movies_id, movies.movieName, AVG(ratings.ratingValue) AS avg_rating 
-        FROM ratings 
-        JOIN movies ON ratings.movies_id = movies.movies_id 
-        WHERE ratings.user_id IN (
-            SELECT CASE 
-                WHEN FR.user_id = :userID THEN FR.user2_id 
-                ELSE FR.user_id 
-                END AS friend_id
-                           FROM Friend_Requests FR 
-                           WHERE (FR.user_id = :userID OR FR.user2_id = :userID) 
-                           AND FR.Accept_Status = 1
-        )
+        $stmt = $pdo->prepare('SELECT movies.movies_id, movies.movieName, AVG(ratings.ratingValue) AS avg_rating  
+        FROM ratings
+        JOIN movies ON ratings.movies_id = movies.movies_id
+        JOIN Friend_Requests ON (ratings.user_id = Friend_Requests.user_id OR ratings.user_id = Friend_Requests.user2_id)
+        WHERE ratings.user_id != :userID
+          AND ratings.movies_id IN (
+              SELECT movies.movies_id
+              FROM Friend_Requests 
+              WHERE (Friend_Requests.user_id = :userID OR Friend_Requests.user2_id = :userID) 
+              AND Friend_Requests.Accept_Status = 1
+          )
         GROUP BY movies.movies_id, movies.movieName
-        ORDER BY avg_rating DESC 
+        ORDER BY avg_rating DESC    
         LIMIT 10');
         $stmt->bindParam(':userID', $pageID);
         $stmt->execute();
@@ -126,10 +166,14 @@ $friendsList = $friendsQuery->fetchAll(PDO::FETCH_COLUMN);
             }
             echo '<li><a href="moviePage.php?id=' . $movieID . '">'.($movie['movieName']) . '</a> (Average Rating: ' . number_format($movie['avg_rating'], 1) . ')</li>';
         }
+    }
         ?>
     </ul>
 </div>
 </div>
+
+<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
+	<script type="text/javascript" src="friendRequest.js"></script>
 
 <body>
 
